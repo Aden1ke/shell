@@ -17,15 +17,14 @@ int main(int argc, char *argv[])
 
 	argc = argc;
 	argv = argv;
-		
 	while (1 && !pipe)
 	{
 		if (isatty(STDIN_FILENO) == 0)
 			pipe = true;
-		
+
 		write(STDOUT_FILENO, start, 2);
 
-		data = getline(&buf, &size, stdin);
+		data = my_getline(&buf, &size, stdin);
 		if (data == -1)
 		{
 			perror("getline error");
@@ -47,7 +46,7 @@ int main(int argc, char *argv[])
 		}
 
 		waitpid(my_pid, &p_stat, 0);
-		if(p_stat != 0)
+		if (p_stat != 0)
 		{
 			exit(EXIT_FAILURE);
 		}
@@ -55,5 +54,5 @@ int main(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 	}
 	free(buf);
-	return(0);
+	return (0);
 }

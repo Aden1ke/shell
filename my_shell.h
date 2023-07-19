@@ -10,4 +10,5 @@
 #include <sys/wait.h>
 void handle_arguments(char *line);
 int _strcmp(char *s1, char *s2);
+ssize_t my_getline(char **buffer, size_t *n, FILE *stream);
 #endif
