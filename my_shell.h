@@ -9,4 +9,5 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 void handle_arguments(char *line);
+int _strcmp(char *s1, char *s2);
 #endif
