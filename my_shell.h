@@ -1,11 +1,12 @@
-#ifndef _my_shell_h_
-#define _my_shell_h_
-
+#ifndef SHELL_H
+#define SHELL_H
 #include <stdio.h>
-#include <unistd.h>
+#include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <stdbool.h>
 #include <sys/wait.h>
-
+void handle_arguments(char *line);
 #endif

@@ -8,7 +8,6 @@
  *
  * Return: 0 on success.
  */
-
 int main(int argc, char *argv[])
 {
 	bool pipe = false;
@@ -18,6 +17,7 @@ int main(int argc, char *argv[])
 	pid_t my_pid;
 	int p_stat;
 	argc = argc;
+	argv = argv;
 		
 	while(1 && !pipe)
 	{
@@ -44,10 +44,7 @@ int main(int argc, char *argv[])
 		}
 		if(my_pid == 0)
 		{
-			execve(buf, argv, NULL);
-
-			perror("execve");
-			exit(EXIT_FAILURE);
+			handle_arguments(buf);
 		}
 
 		waitpid(my_pid, &p_stat, 0);
