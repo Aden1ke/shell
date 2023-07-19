@@ -6,7 +6,8 @@
  * @stream: file descriptor.
  * Return: 0n success 1.
  */
-ssize_t my_getline(char **buffer, size_t *n, FILE *stream) {
+ssize_t my_getline(char **buffer, size_t *n, FILE *stream)
+{
 	initialize_buffer(buffer, n);
 	return (read_from_buffer(buffer, n, stream));
 }
@@ -41,8 +42,8 @@ void initialize_buffer(char **buffer, size_t *n)
 ssize_t read_from_buffer(char **buffer, size_t *n, FILE *stream)
 {
 	static char read_buffer[BUFFER_SIZE];
-	static size_t buffer_position = 0;
-	static ssize_t bytes_in_buffer = 0;
+	static size_t buffer_position;
+	static ssize_t bytes_in_buffer;
 	size_t i = 0;
 	char result;
 	int newline_found = 0;
@@ -60,7 +61,7 @@ ssize_t read_from_buffer(char **buffer, size_t *n, FILE *stream)
 		(*buffer)[i++] = result;
 		if (result == '\n')
 			newline_found = 1;
-		if (i >= *n - 1) 
+		if (i >= *n - 1)
 		{
 			*n *= 2;
 			*buffer = realloc(*buffer, *n * sizeof(char));
