@@ -12,16 +12,17 @@ int main(int argc, char *argv[])
 	int command;
 
 	argc = argc;
+	printf("$ ");
 	command = getline(&string, &len, stdin);
 	if (command == -1)
 	{
 		return (-1);
 	}
-	token = strtok(string, " ");
+	token = strtok(string, "\n");
 	while (token != NULL)
 	{
 		argv[i++] = token;
-		token = strtok(NULL, " ");	
+		token = strtok(NULL, "\n");	
 	}
 	argv[i] = NULL;
 	if (execve(argv[0], argv, NULL) == -1)
