@@ -12,8 +12,7 @@ int main(int argc, char *argv[])
 	char *start = "$ ", *buf = NULL;
 	ssize_t data;
 	size_t size = 0;
-	pid_t my_pid;
-	int p_stat;
+	int p_status;
 
 	argc = argc;
 	argv = argv;
@@ -34,25 +33,36 @@ int main(int argc, char *argv[])
 		if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
 
-		my_pid = fork();
-		if (my_pid < 0)
-		{
-			perror("fork error");
-			exit(EXIT_FAILURE);
-		}
-		if (my_pid == 0)
-		{
-			handle_arguments(buf);
-		}
-
-		waitpid(my_pid, &p_stat, 0);
-		if (p_stat != 0)
+		p_status = handle_fork_process(buf);
+		if (p_status != 0)
 		{
 			exit(98);
 		}
-		if (_strcmp(buf, "exit") == 0)
-			exit(98);
 	}
 	free(buf);
 	return (0);
+}
+/**
+ * handle_fork_process - handle fork process
+ * to create reapeted process
+ * @command: string to break down
+ * Return: p_sta.
+ */
+int handle_fork_process(char *command)
+{
+	pid_t my_pid;
+	int p_stat;
+
+	my_pid = fork();
+	if (my_pid < 0)
+	{
+		perror("fork error");
+		exit(EXIT_FAILURE);
+	}
+	if (my_pid == 0)
+	{
+		handle_arguments(command);
+	}
+	waitpid(my_pid, &p_stat, 0);
+	return (p_stat);
 }

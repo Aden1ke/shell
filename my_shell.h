@@ -14,5 +14,5 @@ int _strcmp(char *s1, char *s2);
 ssize_t my_getline(char **buffer, size_t *n, FILE *stream);
 ssize_t read_from_buffer(char **buffer, size_t *n, FILE *stream);
 void initialize_buffer(char **buffer, size_t *n);
-void handle_exit_cmd(char *buf);
+int handle_fork_process(char *command);
 #endif
