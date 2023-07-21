@@ -18,13 +18,14 @@ void handle_arguments(char *line)
 	command[i] = NULL;
 	if (strcmp(command[0], "exit") == 0)
 	{
-		exit(EXIT_SUCCESS);
+		exit(98);
 	}
 	if (execve(command[0], command, NULL) == -1)
 	{
 		perror("Error");
 	}
 }
+
 /**
  * _strcmp - function that compares two strings.
  * @s1: pointer to the 1st string.

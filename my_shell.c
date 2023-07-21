@@ -48,10 +48,10 @@ int main(int argc, char *argv[])
 		waitpid(my_pid, &p_stat, 0);
 		if (p_stat != 0)
 		{
-			exit(EXIT_FAILURE);
+			exit(98);
 		}
 		if (_strcmp(buf, "exit") == 0)
-			exit(EXIT_SUCCESS);
+			exit(98);
 	}
 	free(buf);
 	return (0);
