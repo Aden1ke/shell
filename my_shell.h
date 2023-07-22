@@ -9,10 +9,24 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 #define BUFFER_SIZE 1024
+
+typedef struct list_s
+{
+	char *dir;
+	struct list_s *next;
+} list_t;
+
 void handle_arguments(char *line);
 int _strcmp(char *s1, char *s2);
 ssize_t my_getline(char **buffer, size_t *n, FILE *stream);
 ssize_t read_from_buffer(char **buffer, size_t *n, FILE *stream);
 void initialize_buffer(char **buffer, size_t *n);
 int handle_fork_process(char *command);
+void free_list(list_t *head);
+list_t *node_end(list_t **head, char *dir);
+int _strlen(const char *str);
+char *_strcat(char *dest, const char *str);
+char *_strncat(char *dest, const char *str, size_t n);
+int _strncmp(const char *str1, const char *str2, size_t n);
+
 #endif
