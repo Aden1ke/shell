@@ -83,20 +83,20 @@ char *fill_path(char *path)
 list_t *get_path(char *path)
 {
 	int start;
-	char *dirs, *path_copy;
+	char **dirs, *path_copy;
 	list_t *head = NULL;
 
 	path_copy = fill_path(path);
 	if (!path_copy)
 		return (NULL);
-	dirs = strtok(path_copy, ":");
+	dirs = _strtok(path_copy, ":");
 	free(path_copy);
 	if (!dirs)
 		return (NULL);
 
 	for (start = 0; dirs[start]; start++)
 	{
-		if (node_end(&head, &dirs[start]) == NULL)
+		if (node_end(&head, dirs[start]) == NULL)
 		{
 			free_list(head);
 			free(dirs);

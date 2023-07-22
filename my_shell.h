@@ -35,5 +35,8 @@ char **get_env(const char *var);
 char *fill_path(char *path);
 list_t *get_path(char *path);
 char *locate_path(char *com);
+int token_len(char *str, char *delim);
+int count_token(char *str, char *delim);
+char **_strtok(char *str, char *delim);
 
 #endif
