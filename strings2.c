@@ -1,3 +1,4 @@
+#include "my_shell.h"
 /**
  * _strcpy - Copies the string pointed to by str,
  * with the terminating null byte, to the buffer.

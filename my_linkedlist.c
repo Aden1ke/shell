@@ -1,3 +1,4 @@
+#include "my_shell.h"
 /**
  * free_list - Frees a linked list.
  * @head: The head of the list.

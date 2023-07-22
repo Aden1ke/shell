@@ -1,3 +1,4 @@
+#include "my_shell.h"
 /**
  * _strlen - Returns the length of a string.
  * @str: A pointer to the characters string.

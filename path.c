@@ -1,3 +1,4 @@
+#include "my_shell.h"
 /**
  * get_env - Gets the env from the path.
  * @var: The name of the env variable.

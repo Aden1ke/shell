@@ -15,6 +15,8 @@ typedef struct list_s
 	char *dir;
 	struct list_s *next;
 } list_t;
+extern char **env;
+char *name;
 
 void handle_arguments(char *line);
 int _strcmp(char *s1, char *s2);
@@ -28,5 +30,10 @@ int _strlen(const char *str);
 char *_strcat(char *dest, const char *str);
 char *_strncat(char *dest, const char *str, size_t n);
 int _strncmp(const char *str1, const char *str2, size_t n);
+char *_strcpy(char *dest, const char *str);
+char **get_env(const char *var);
+char *fill_path(char *path);
+list_t *get_path(char *path);
+char *locate_path(char *com);
 
 #endif
