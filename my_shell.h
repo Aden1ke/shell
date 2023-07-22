@@ -15,7 +15,7 @@ typedef struct list_s
 	char *dir;
 	struct list_s *next;
 } list_t;
-extern char **env;
+extern char **environ;
 char *name;
 
 void handle_arguments(char *line);
