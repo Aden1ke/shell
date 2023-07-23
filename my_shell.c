@@ -57,6 +57,11 @@ int handle_fork_process(char *command)
 	{
 		command = locate_path(command);
 	}
+	if (!command || (access(command, F_OK) == -1))
+	{
+		perror("path error");
+		exit(EXIT_FAILURE);
+	}
 	else
 	{
 		my_pid = fork();
