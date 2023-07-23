@@ -10,10 +10,10 @@ char **get_env(const char *var)
 	int start, len;
 
 	len = _strlen(var);
-	for (start = 0; env[start]; start++)
+	for (start = 0; environ[start]; start++)
 	{
-		if (_strncmp(var, env[start], len) == 0)
-			return (&env[start]);
+		if (_strncmp(var, environ[start], len) == 0)
+			return (&environ[start]);
 	}
 
 	return (NULL);
@@ -89,7 +89,7 @@ list_t *get_path(char *path)
 	path_copy = fill_path(path);
 	if (!path_copy)
 		return (NULL);
-	dirs = strtok(path_copy, ":");
+	dirs = _strtok(path_copy, ":");
 	free(path_copy);
 	if (!dirs)
 		return (NULL);
@@ -129,7 +129,7 @@ char *locate_path(char *com)
 
 	while (dirs)
 	{
-		temp = malloc(_strlen(dirs->dir) + _strlen(command) + 2);
+		temp = malloc(_strlen(dirs->dir) + _strlen(com) + 2);
 		if (!temp)
 			return (NULL);
 
