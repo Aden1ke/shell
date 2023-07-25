@@ -52,8 +52,9 @@ int handle_fork_process(char *command)
 {
 	pid_t my_pid;
 	int p_stat;
+	handle_arguments(command);
 
-	if (command[0] != '/' && command[0] != '.')
+	if (command)
 	{
 		command = locate_path(command);
 	}
