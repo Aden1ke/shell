@@ -21,7 +21,7 @@ void handle_arguments(char *line)
 	}
 	if (execve(command[0], command, environ) == -1)
 	{
-		perror("Error");
+		perror("Execve Error");
 	}
 }
 

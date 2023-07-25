@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
 	char *start = "$ ", *buf = NULL;
 	ssize_t data;
 	size_t size = 0;
-	int p_status;
 
 	argc = argc;
 	argv = argv;
@@ -34,10 +33,7 @@ int main(int argc, char *argv[])
 			buf[data - 1] = '\0';
 
 		p_status = handle_fork_process(buf);
-		if (p_status != 0)
-		{
-			exit(98);
-		}
+
 	}
 	free(buf);
 	return (0);
