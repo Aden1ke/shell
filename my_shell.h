@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 #define BUFFER_SIZE 1024
 
+extern char *current_working_directory;
+
 typedef struct list_s
 {
 	char *dir;
@@ -35,8 +37,11 @@ char **get_env(const char *var);
 char *fill_path(char *path);
 list_t *get_path(char *path);
 char *locate_path(char *com);
+void execve_helper(char *command, char *args[]);
 int token_len(char *str, char *delim);
 int count_token(char *str, char *delim);
 char **_strtok(char *str, char *delim);
+void handle_CD(char *command);
+void update_pwd();
 
 #endif

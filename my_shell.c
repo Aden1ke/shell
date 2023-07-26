@@ -53,30 +53,17 @@ int handle_fork_process(char *command)
 {
 	pid_t my_pid;
 	int p_stat;
-	handle_arguments(command);
 
-	if (command)
+	my_pid = fork();
+	if (my_pid < 0)
 	{
-		command = locate_path(command);
-	}
-	if (!command || (access(command, F_OK) == -1))
-	{
-		perror("path error");
+		perror("fork error");
 		exit(EXIT_FAILURE);
 	}
-	else
+	if (my_pid == 0)
 	{
-		my_pid = fork();
-		if (my_pid < 0)
-		{
-			perror("fork error");
-			exit(EXIT_FAILURE);
-		}
-		if (my_pid == 0)
-		{
-			handle_arguments(command);
-		}
-		waitpid(my_pid, &p_stat, 0);
+		handle_arguments(command);
 	}
+	waitpid(my_pid, &p_stat, 0);
 	return (p_stat);
 }

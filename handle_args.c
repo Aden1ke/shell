@@ -19,12 +19,29 @@ void handle_arguments(char *line)
 	{
 		exit(98);
 	}
-	if (execve(command[0], command, environ) == -1)
-	{
-		perror("Execve Error");
-	}
+	execve_helper(command[0], command);
+        perror("Execve Error");
 }
+/**
+ * execve_helper - execute the command using execve
+ * @command: the command to execute
+ * @args: an array of arguments including the command itself
+ * Return: void
+ */
+void execve_helper(char *command, char *args[])
+{
+        char *command_path = locate_path(command);
+        if (!command_path || access(command_path, X_OK) == -1)
+        {
+                perror("path error");
+                exit(EXIT_FAILURE);
+        }
 
+        if (execve(command_path, args, environ) == -1)
+        {
+                perror("Execve Error");
+        }
+}
 /**
  * _strcmp - function that compares two strings.
  * @s1: pointer to the 1st string.
