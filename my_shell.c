@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
 			exit(98);
 		}
 
+		free(buf);
+		buf = NULL;
 	}
-	free(buf);
-	buf = NULL;
 	return (0);
 }
 /**
