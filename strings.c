@@ -39,7 +39,7 @@ char *_strcat(char *dest, const char *str)
 }
 
 /**
- * _strncat - Concantenates two strings where 
+ * _strncat - Concantenates two strings where
  * number of bytes are copied.
  * @dest: Pointer to destination string.
  * @str: Pointer to string.
@@ -64,8 +64,8 @@ char *_strncat(char *dest, const char *str, size_t n)
  * @str1: Pointer to a string.
  * @str2: Pointer to a string.
  * @n: The first n bytes of the strings.
- * Return: Less than 0 if str1 is shorter than 
- * str2. 0 if str1 and str2 match. Greater 
+ * Return: Less than 0 if str1 is shorter than
+ * str2. 0 if str1 and str2 match. Greater
  * than 0 if str1 is longer than str2.
  */
 int _strncmp(const char *str1, const char *str2, size_t n)

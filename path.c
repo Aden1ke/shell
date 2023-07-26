@@ -66,9 +66,7 @@ char *fill_path(char *path)
 				_strcat(path_copy, ":");
 		}
 		else
-		{
 			_strncat(path_copy, &path[i], 1);
-		}
 	}
 	return (path_copy);
 }

@@ -15,12 +15,12 @@ void handle_arguments(char *line)
 		command[i++] = token;
 		token = strtok(NULL, " \t\n");
 	}
-	if (strcmp(command[0], "exit") == 0)
+	if (_strcmp(command[0], "exit") == 0)
 	{
 		exit(98);
 	}
 	execve_helper(command[0], command);
-        perror("Execve Error");
+	perror("Execve Error");
 }
 /**
  * execve_helper - execute the command using execve
@@ -30,17 +30,18 @@ void handle_arguments(char *line)
  */
 void execve_helper(char *command, char *args[])
 {
-        char *command_path = locate_path(command);
-        if (!command_path || access(command_path, X_OK) == -1)
-        {
-                perror("path error");
-                exit(EXIT_FAILURE);
-        }
+	char *command_path = locate_path(command);
 
-        if (execve(command_path, args, environ) == -1)
-        {
-                perror("Execve Error");
-        }
+	if (!command_path || access(command_path, X_OK) == -1)
+	{
+		perror("path error");
+		exit(EXIT_FAILURE);
+	}
+
+	if (execve(command_path, args, environ) == -1)
+	{
+		perror("Execve Error");
+	}
 }
 /**
  * _strcmp - function that compares two strings.
