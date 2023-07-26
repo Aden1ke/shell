@@ -24,8 +24,8 @@ void initialize_buffer(char **buffer, size_t *n)
 
 	if (*buffer == NULL || *n == 0)
 	{
-		*n = BUFFER_SIZE;
-		*buffer = malloc(*n * sizeof(char));
+		*n = 1000;
+		*buffer = _calloc(*n, sizeof(char));
 		if (*buffer == NULL)
 		{
 			exit(EXIT_FAILURE);
@@ -41,7 +41,7 @@ void initialize_buffer(char **buffer, size_t *n)
  */
 ssize_t read_from_buffer(char **buffer, size_t *n, FILE *stream)
 {
-	static char read_buffer[BUFFER_SIZE];
+	static char read_buffer[1000];
 	static size_t buffer_position;
 	static ssize_t bytes_in_buffer;
 	size_t i = 0;
@@ -52,7 +52,7 @@ ssize_t read_from_buffer(char **buffer, size_t *n, FILE *stream)
 	{
 		if ((ssize_t)buffer_position >= bytes_in_buffer)
 		{
-			bytes_in_buffer = read(fileno(stream), read_buffer, BUFFER_SIZE);
+			bytes_in_buffer = read(fileno(stream), read_buffer, 1000);
 			buffer_position = 0;
 			if (bytes_in_buffer <= 0)
 				break;

@@ -16,7 +16,7 @@ void handle_arguments(char *line)
 		token = strtok(NULL, " \t\n");
 	}
 	command[i] = NULL;
-	if (_strcmp(command[0], "exit") == 0)
+	if (i > 0 && _strcmp(command[0], "exit") == 0)
 	{
 		exit(98);
 	}
