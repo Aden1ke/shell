@@ -19,7 +19,9 @@ int main(int argc, char *argv[])
 	while (1 && !pipe)
 	{
 		if (isatty(STDIN_FILENO) == 0)
-			pipe = true;
+			pipe = false;
+		else
+			pipe = false;
 
 		write(STDOUT_FILENO, start, 2);
 
@@ -28,6 +30,7 @@ int main(int argc, char *argv[])
 		{
 			perror("getline error");
 			free(buf);
+			continue;
 		}
 
 		if (buf[data - 1] == '\n')
