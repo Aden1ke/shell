@@ -19,10 +19,7 @@ int main(int argc, char *argv[])
 	while (1 && !pipe)
 	{
 		if (isatty(STDIN_FILENO) == 0)
-			pipe = false;
-		else
-			pipe = false;
-
+			pipe = true;
 		write(STDOUT_FILENO, start, 2);
 
 		data = my_getline(&buf, &size, stdin);
