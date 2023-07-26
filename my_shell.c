@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 			pipe = true;
 		write(STDOUT_FILENO, start, 2);
 
-		data = getline(&buf, &size, stdin);
+		data = my_getline(&buf, &size, stdin);
 		if (data == -1)
 		{
 			perror("getline error");
@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
 
 	}
 	free(buf);
+	buf = NULL;
 	return (0);
 }
 /**
