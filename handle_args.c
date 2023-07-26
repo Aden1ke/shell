@@ -30,7 +30,11 @@ void handle_arguments(char *line)
  */
 void execve_helper(char *command, char *args[])
 {
-	char *command_path = locate_path(command);
+	char *command_path = command;
+
+	if (command_path[0] != '/' && command_path[0] != '.')
+		command_path = locate_path(command_path);
+
 
 	if (!command_path || access(command_path, X_OK) == -1)
 	{
