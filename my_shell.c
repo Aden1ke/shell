@@ -1,3 +1,9 @@
+s with 2 additions and 2 deletions.
+ Binary file removedBIN -12 KB 
+.swp
+Binary file not shown.
+  4 changes: 2 additions & 2 deletions4  
+my_shell.c
 #include "my_shell.h"
 /**
  * main - Simple shell program that runs shell commands
@@ -18,47 +24,24 @@ int main(int argc, char *argv[])
 	argv = argv;
 	if (!isatty(STDIN_FILENO))
 		pipe = true;
-	if (!pipe)
+	while (1 && !pipe)
 	{
-		while (!pipe)
-		{
+		if (!pipe)
 			write(STDOUT_FILENO, start, 2);
-			data = my_getline(&buf, &size, stdin);
-			if (data == -1)
-			{
-				perror("getline error");
-				free(buf);
-				continue;
-			}
 
-			if (buf[data - 1] == '\n')
-			buf[data - 1] = '\0';
-
-			p_status = handle_fork_process(buf);
-			if (p_status != 0)
-			{
-				free_buffer(&buf);
-				return (p_status);
-			}
-		}
-	}
-	else
-	{
-		while (1)
+		data = my_getline(&buf, &size, stdin);
+		if (data == -1)
 		{
-			data = my_getline(&buf, &size, stdin);
-			if (data == -1)
-				break;
-
-			if (buf[data - 1] == '\n')
+			perror("getline error");
+			free(buf);
+			continue;
+		}
+		if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
-
-			p_status = handle_fork_process(buf);
-			if (p_status != 0)
-			{
-				free_buffer(&buf);
-				return (p_status);
-			}
+		p_status = handle_fork_process(buf);
+		if (p_status != 0)
+		{
+			return (p_status);
 		}
 	}
 	free_buffer(&buf);
@@ -74,7 +57,6 @@ int handle_fork_process(char *command)
 {
 	pid_t my_pid;
 	int p_stat, exit_status;
-
 	my_pid = fork();
 	if (my_pid < 0)
 	{
