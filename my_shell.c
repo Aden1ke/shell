@@ -22,24 +22,24 @@ int main(int argc, char *argv[])
 	{
 		while (!pipe)
 		{
-		write(STDOUT_FILENO, start, 2);
+			write(STDOUT_FILENO, start, 2);
+			data = my_getline(&buf, &size, stdin);
+			if (data == -1)
+			{
+				perror("getline error");
+				free(buf);
+				continue;
+			}
 
-		data = my_getline(&buf, &size, stdin);
-		if (data == -1)
-		{
-			perror("getline error");
-			free(buf);
-			continue;
-		}
-
-		if (buf[data - 1] == '\n')
+			if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
 
-		p_status = handle_fork_process(buf);
-		if (p_status != 0)
-		{
-			return (p_status);
-		}
+			p_status = handle_fork_process(buf);
+			if (p_status != 0)
+			{
+				free_buffer(&buf);
+				return (p_status);
+			}
 		}
 	}
 	else
