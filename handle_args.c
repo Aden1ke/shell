@@ -18,7 +18,19 @@ void handle_arguments(char *line)
 	command[i] = NULL;
 	if (i > 0 && _strcmp(command[0], "exit") == 0)
 	{
-		exit(98);
+		if (i == 1)
+			exit(0);
+		else if (i == 2)
+		{
+			int status = atoi(command[1]);
+
+			exit(status);
+		}
+		else
+		{
+			perror("Usage: exit [status]");
+			exit(EXIT_FAILURE);
+		}
 	}
 	if (execve_helper(command[0], command) == -1)
 	{

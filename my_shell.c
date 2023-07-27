@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 		p_status = handle_fork_process(buf);
 		if (p_status != 0)
 		{
-			exit(98);
+			exit(p_status);
 		}
 	}
 	free_buffer(&buf);
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 int handle_fork_process(char *command)
 {
 	pid_t my_pid;
-	int p_stat;
+	int p_stat, exit_status;
 
 	my_pid = fork();
 	if (my_pid < 0)
@@ -63,8 +63,16 @@ int handle_fork_process(char *command)
 	{
 		handle_arguments(command);
 	}
-	waitpid(my_pid, &p_stat, 0);
-	return (p_stat);
+	else
+	{
+		waitpid(my_pid, &p_stat, 0);
+		if (WIFEXITED(p_stat))
+		{
+			exit_status = WEXITSTATUS(p_stat);
+			return (exit_status);
+		}
+	}
+	return (0);
 }
 void free_buffer(char **buffer)
 {
