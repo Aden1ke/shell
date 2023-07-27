@@ -38,7 +38,12 @@ int main(int argc, char *argv[])
 			p_status = handle_fork_process(buf);
 			if (p_status != 0)
 			{
-				if (p_status == END_OF_FILE)                                                                                write(STDOUT_FILENO, new_line, 1);
+				if (p_status == END_OF_FILE)
+				{
+					write(STDOUT_FILENO, new_line, 1);
+					free_buffer(&buf);
+					exit(EXIT_FAILURE);
+				}
 				return (p_status);
 			}
 		}
@@ -55,8 +60,9 @@ int main(int argc, char *argv[])
 			buf[data - 1] = '\0';
 
 			p_status = handle_fork_process(buf);
+			free_buffer(&buf);
 			if (p_status != 0)
-			{
+                        {
 				return (p_status);
 			}
 		}
