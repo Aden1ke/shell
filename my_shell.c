@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
 	{
 		if (isatty(STDIN_FILENO) == 0)
 			pipe = true;
-		write(STDOUT_FILENO, start, 2);
+		if (!pipe)
+			write(STDOUT_FILENO, start, 2);
 
 		data = my_getline(&buf, &size, stdin);
 		if (data == -1)
