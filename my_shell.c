@@ -109,8 +109,8 @@ int handle_fork_process(char *command)
 	}
 	if (my_pid == 0)
 	{
-		handle_arguments(command);
-		exit(EXIT_SUCCESS);
+		int status = handle_arguments(command);
+		exit(status);
 	}
 	else
 	{

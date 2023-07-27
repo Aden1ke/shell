@@ -10,6 +10,9 @@ int handle_arguments(char *line)
 	char *command[1000], *token;
 	int i = 0;
 
+	size_t len = strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
 	token = strtok(line, " \t\n");
 	while (token != NULL)
 	{
@@ -26,7 +29,6 @@ int handle_arguments(char *line)
 		else if (i == 2)
 		{
 			int status = _atoi(command[1]);
-			exit(status);
 			return (status);
 		}
 		else
