@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 		{
 			return (p_status);
 		}
+		fflush(stdout);
 	}
 	free_buffer(&buf);
 	return (0);
