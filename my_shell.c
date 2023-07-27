@@ -38,10 +38,8 @@ int main(int argc, char *argv[])
 		{
 			exit(98);
 		}
-
 	}
-	free(buf);
-	buf = NULL;
+	free_buffer(&buf);
 	return (0);
 }
 /**
@@ -67,4 +65,12 @@ int handle_fork_process(char *command)
 	}
 	waitpid(my_pid, &p_stat, 0);
 	return (p_stat);
+}
+void free_buffer(char **buffer)
+{
+	if (buffer != NULL && *buffer != NULL)
+	{
+		free(*buffer);
+		*buffer = NULL;
+	}
 }

@@ -8,7 +8,6 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 #include <sys/wait.h>
-#define BUFFER_SIZE 1024
 
 extern char *current_working_directory;
 
@@ -41,7 +40,9 @@ int execve_helper(char *command, char *args[]);
 int token_len(char *str, char *delim);
 int count_token(char *str, char *delim);
 char **_strtok(char *str, char *delim);
+void *_calloc(unsigned int nmemb, unsigned int size);
 void handle_CD(char *command);
 void update_pwd();
+void free_buffer(char **buffer);
 
 #endif
