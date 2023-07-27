@@ -21,7 +21,7 @@ void handle_arguments(char *line)
 	{
 		if (i == 1)
 		{
-			exit(1); 
+			exit(0); 
 		}
 		else if (i == 2)
 		{
@@ -54,16 +54,13 @@ int execve_helper(char *command, char *args[])
 		command_path = locate_path(command_path);
 	if (!command_path || access(command_path, X_OK) == -1)
 	{
-<<<<<<< HEAD
 		if (errno == EACCES)
 			exit_status = (handle_error(args, 126));
 		else
 			exit_status = (handle_error(args, 127));
 		retry_with_next_path = 1;
-=======
 		perror("path error");
 		return (-1);
->>>>>>> 65674e2a7ea63f0c17ebcb3793ee90e7dd4f29fe
 	}
 
 	if (execve(command_path, args, environ) == -1)
@@ -77,10 +74,8 @@ int execve_helper(char *command, char *args[])
 	while (retry_with_next_path)
 		;
 	return (exit_status);
-=======
 			perror("Execve Error");
 			return (-1);
 		}
 		return (0);
->>>>>>> 65674e2a7ea63f0c17ebcb3793ee90e7dd4f29fe
 }
