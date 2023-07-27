@@ -18,10 +18,11 @@ int main(int argc, char *argv[])
 	argv = argv;
 	if (!isatty(STDIN_FILENO))
 		pipe = true;
-	while (1 && !pipe)
+	if (!pipe)
 	{
-		if (!pipe)
-			write(STDOUT_FILENO, start, 2);
+		while (!pipe)
+		{
+		write(STDOUT_FILENO, start, 2);
 
 		data = my_getline(&buf, &size, stdin);
 		if (data == -1)
@@ -38,6 +39,26 @@ int main(int argc, char *argv[])
 		if (p_status != 0)
 		{
 			return (p_status);
+		}
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			data = my_getline(&buf, &size, stdin);
+			if (data == -1)
+				break;
+
+			if (buf[data - 1] == '\n')
+			buf[data - 1] = '\0';
+
+			p_status = handle_fork_process(buf);
+			if (p_status != 0)
+			{
+				free_buffer(&buf);
+				return (p_status);
+			}
 		}
 	}
 	free_buffer(&buf);
