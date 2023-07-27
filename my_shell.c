@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 		while (!pipe)
 		{
 			write(STDOUT_FILENO, start, 2);
-			data = getline(&buf, &size, stdin);
+			data = my_getline(&buf, &size, stdin);
 			if (data == -1)
 			{
 				perror("getline error");
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	{
 		while (1)
 		{
-			data = getline(&buf, &size, stdin);
+			data = my_getline(&buf, &size, stdin);
 			if (data == -1)
 				break;
 
