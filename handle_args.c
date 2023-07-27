@@ -65,7 +65,6 @@ int execve_helper(char *command, char *args[])
 
 	if (execve(command_path, args, environ) == -1)
 		{
-<<<<<<< HEAD
 			if (errno == EACCES)
 				exit_status = (handle_error(args, 126));
 		}
