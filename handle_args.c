@@ -19,7 +19,7 @@ void handle_arguments(char *line)
 	if (i > 0 && _strcmp(command[0], "exit") == 0)
 	{
 		if (i == 1)
-			exit(0);
+			exit(1);
 		else if (i == 2)
 		{
 			int status = atoi(command[1]);
