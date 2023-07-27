@@ -9,13 +9,14 @@
 int main(int argc, char *argv[])
 {
 	bool pipe = false;
-	char *start = "$ ", *buf = NULL;
+	char *start = "$ ", *buf = NULL, *new_line = "\n";
 	ssize_t data;
 	size_t size = 0;
 	int p_status;
 
 	argc = argc;
 	argv = argv;
+
 	if (!isatty(STDIN_FILENO))
 		pipe = true;
 	if (!pipe)
@@ -37,6 +38,7 @@ int main(int argc, char *argv[])
 			p_status = handle_fork_process(buf);
 			if (p_status != 0)
 			{
+				if (p_status == END_OF_FILE)                                                                                write(STDOUT_FILENO, new_line, 1);
 				return (p_status);
 			}
 		}

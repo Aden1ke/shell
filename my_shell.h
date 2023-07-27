@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 
+#define END_OF_FILE -2
 extern char *current_working_directory;
 
 typedef struct list_s
