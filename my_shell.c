@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
 			if (p_status != 0)
                         {
 				return (p_status);
+				exit(EXIT_SUCCESS);
 			}
 		}
 	}
@@ -90,7 +91,7 @@ int handle_fork_process(char *command)
 	if (my_pid == 0)
 	{
 		handle_arguments(command);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
