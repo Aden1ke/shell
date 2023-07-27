@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
 			if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
-
+			if (_strcmp(buf, "exit") == 0)                                                                      {                                                         handle_arguments(buf);                                                                              break;                                    }
 			p_status = handle_fork_process(buf);
 			if (p_status != 0)
 			{
@@ -59,6 +59,11 @@ int main(int argc, char *argv[])
 			if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
 
+			if (_strcmp(buf, "exit") == 0)
+			{
+				handle_arguments(buf);
+				break;
+			}
 			p_status = handle_fork_process(buf);
 			free_buffer(&buf);
 			if (p_status != 0)
