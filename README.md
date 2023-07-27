@@ -1,1 +1,1 @@
-SIMPLE SHELL
+A simple_shell
