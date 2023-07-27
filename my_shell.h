@@ -46,6 +46,7 @@ void update_pwd();
 void free_buffer(char **buffer);
 void free_array(char **array);
 int _atoi(char *s);
+int handle_piped_input(char *buf, size_t size);
 
 
 #endif

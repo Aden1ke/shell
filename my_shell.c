@@ -18,29 +18,67 @@ int main(int argc, char *argv[])
 	argv = argv;
 	if (!isatty(STDIN_FILENO))
 		pipe = true;
-	while (1 && !pipe)
+	
+	if (!pipe)
 	{
-		if (!pipe)
-			write(STDOUT_FILENO, start, 2);
+		while (!pipe)
+		{
+			if (!pipe)
+				write(STDOUT_FILENO, start, 2);
 
+			data = my_getline(&buf, &size, stdin);
+			if (data == -1)
+			{
+				perror("getline error");
+				free(buf);
+				continue;
+			}
+			if (buf[data - 1] == '\n')
+			buf[data - 1] = '\0';
+			p_status = handle_fork_process(buf);
+			if (p_status != 0)
+			{
+				return (p_status);
+			}
+		}
+	}
+	else
+	{
+		p_status = handle_piped_input(buf, size);
+		return p_status;
+	}
+	free_buffer(&buf);
+	return (0);
+}
+/**
+ * handle_piped_input - handle piping process
+ * @buff: string to break down
+ * @size: buff size
+ * Return: p_sta.
+ */
+int handle_piped_input(char *buf, size_t size)
+{
+	ssize_t data;
+	int p_status;
+
+	while (1)
+	{
 		data = my_getline(&buf, &size, stdin);
 		if (data == -1)
-		{
-			perror("getline error");
-			free(buf);
-			continue;
-		}
+			break;
+
 		if (buf[data - 1] == '\n')
-			buf[data - 1] = '\0';
+		buf[data - 1] = '\0';
+
 		p_status = handle_fork_process(buf);
 		if (p_status != 0)
 		{
 			return (p_status);
 		}
 	}
-	free_buffer(&buf);
 	return (0);
 }
+
 /**
  * handle_fork_process - handle fork process
  * to create reapeted process
