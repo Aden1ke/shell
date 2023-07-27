@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 		p_status = handle_fork_process(buf);
 		if (p_status != 0)
 		{
-			exit(p_status);
+			return (p_status);
 		}
 	}
 	free_buffer(&buf);
@@ -62,6 +62,7 @@ int handle_fork_process(char *command)
 	if (my_pid == 0)
 	{
 		handle_arguments(command);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

@@ -19,11 +19,16 @@ void handle_arguments(char *line)
 	if (i > 0 && _strcmp(command[0], "exit") == 0)
 	{
 		if (i == 1)
+		{
 			exit(1);
+			free(line);
+                        free_array(command);
+		}
 		else if (i == 2)
 		{
-			int status = atoi(command[1]);
-
+			int status = _atoi(command[1]);
+			free(line);
+                        free_array(command);
 			exit(status);
 		}
 		else
@@ -35,7 +40,7 @@ void handle_arguments(char *line)
 	if (execve_helper(command[0], command) == -1)
 	{
 		perror("Execve Error");
-		exit(EXIT_FAILURE);
+		return;
 	}	
 }
 /**
@@ -47,23 +52,35 @@ void handle_arguments(char *line)
 int execve_helper(char *command, char *args[])
 {
 	char *command_path = command;
+	int exit_status = 0;
+	int retry_with_next_path = 0;
 
-	if (command_path[0] != '/' && command_path[0] != '.')
+	do
+	{
+		if (command_path[0] != '/' && command_path[0] != '.')
 		command_path = locate_path(command_path);
 
 
 	if (!command_path || access(command_path, X_OK) == -1)
 	{
 		perror("path error");
-		exit(EXIT_FAILURE);
+		exit_status = 127;
+		retry_with_next_path = 1;
 	}
 
-	if (execve(command_path, args, environ) == -1)
+	else
 	{
-		perror("Execve Error");
-		return (-1);
+		if (execve(command_path, args, environ) == -1)
+		{
+			perror("Execve Error");
+			exit_status = -1;
+		}
+		retry_with_next_path = 0;
 	}
-	return (0);
+	}
+	while (retry_with_next_path)
+		;
+	return exit_status;
 }
 /**
  * _strcmp - function that compares two strings.

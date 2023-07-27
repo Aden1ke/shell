@@ -44,5 +44,8 @@ void *_calloc(unsigned int nmemb, unsigned int size);
 void handle_CD(char *command);
 void update_pwd();
 void free_buffer(char **buffer);
+void free_array(char **array);
+int _atoi(char *s);
+
 
 #endif
