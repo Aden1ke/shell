@@ -5,7 +5,7 @@
  * @line: string to break down
  * Return: void.
  */
-void handle_arguments(char *line)
+int handle_arguments(char *line)
 {
 	char *command[1000], *token;
 	int i = 0;
@@ -21,23 +21,20 @@ void handle_arguments(char *line)
 	{
 		if (i == 1)
 		{
-			exit(0); 
+			return (0); 
 		}
 		else if (i == 2)
 		{
 			int status = _atoi(command[1]);
-			exit(status);
+			return (status);
 		}
 		else
 		{
 			perror("Usage: exit [status]");
+			return (-1);
 		}
 	}
-	if (execve_helper(command[0], command) == -1)
-	{
-		perror("Execve Error");
-		return;
-	}
+	return (execve_helper(command[0], command));
 }
 
 /**

@@ -34,17 +34,25 @@ int main(int argc, char *argv[])
 
 			if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
-			if (_strcmp(buf, "exit") == 0)                                                                      {                                                         handle_arguments(buf);                                                                              break;                                    }
-			p_status = handle_fork_process(buf);
-			if (p_status != 0)
+			if (_strcmp(buf, "exit") == 0)
 			{
-				if (p_status == END_OF_FILE)
+				p_status = handle_arguments(buf);
+				free(buf);
+				exit(p_status);
+			}
+			else
+			{
+				p_status = handle_fork_process(buf);
+				if (p_status != 0)
 				{
-					write(STDOUT_FILENO, new_line, 1);
-					free_buffer(&buf);
-					exit(EXIT_FAILURE);
+					if (p_status == END_OF_FILE)
+					{
+						write(STDOUT_FILENO, new_line, 1);
+						free_buffer(&buf);
+						exit(EXIT_FAILURE);
+					}
+					return (p_status);
 				}
-				return (p_status);
 			}
 		}
 	}
@@ -61,15 +69,20 @@ int main(int argc, char *argv[])
 
 			if (_strcmp(buf, "exit") == 0)
 			{
-				handle_arguments(buf);
-				break;
+				p_status = handle_arguments(buf);
+				free(buf);
+				exit(p_status);
 			}
-			p_status = handle_fork_process(buf);
-			free_buffer(&buf);
-			if (p_status != 0)
-                        {
-				return (p_status);
-				exit(EXIT_SUCCESS);
+			else
+			{
+				p_status = handle_fork_process(buf);
+				free_buffer(&buf);
+				if (p_status != 0)
+
+				{
+					return (p_status);
+					exit(EXIT_SUCCESS);
+				}
 			}
 		}
 	}
