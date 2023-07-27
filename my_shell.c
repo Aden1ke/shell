@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
 		{
 			return (p_status);
 		}
-		fflush(stdout);
 	}
 	free_buffer(&buf);
 	return (0);
@@ -72,6 +71,7 @@ int handle_fork_process(char *command)
 		if (WIFEXITED(p_stat))
 		{
 			exit_status = WEXITSTATUS(p_stat);
+			fflush(stdout);
 			return (exit_status);
 		}
 	}
