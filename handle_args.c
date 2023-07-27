@@ -26,6 +26,7 @@ int handle_arguments(char *line)
 		else if (i == 2)
 		{
 			int status = _atoi(command[1]);
+			exit(status);
 			return (status);
 		}
 		else

@@ -34,11 +34,12 @@ int main(int argc, char *argv[])
 
 			if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
+
 			if (_strcmp(buf, "exit") == 0)
 			{
 				p_status = handle_arguments(buf);
 				free(buf);
-				exit(p_status);
+				return (p_status);
 			}
 			else
 			{
@@ -71,7 +72,7 @@ int main(int argc, char *argv[])
 			{
 				p_status = handle_arguments(buf);
 				free(buf);
-				exit(p_status);
+				return (p_status);
 			}
 			else
 			{
