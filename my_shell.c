@@ -16,10 +16,10 @@ int main(int argc, char *argv[])
 
 	argc = argc;
 	argv = argv;
+	if (!isatty(STDIN_FILENO))
+		pipe = true;
 	while (1 && !pipe)
 	{
-		if (isatty(STDIN_FILENO) == 0)
-			pipe = true;
 		if (!pipe)
 			write(STDOUT_FILENO, start, 2);
 
