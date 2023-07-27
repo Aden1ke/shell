@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 #define END_OF_FILE -2
 extern char *current_working_directory;
@@ -19,6 +20,7 @@ typedef struct list_s
 } list_t;
 extern char **environ;
 char *name;
+int incr;
 
 void handle_arguments(char *line);
 int _strcmp(char *s1, char *s2);
@@ -48,6 +50,10 @@ void free_buffer(char **buffer);
 void free_array(char **array);
 int _atoi(char *s);
 int handle_piped_input(char *buf, size_t size);
-
+int len_num(int num);
+char *_itoa(int num);
+char *error_126(char **args);
+char *error_127(char **args);
+int handle_error(char **args, int err);
 
 #endif

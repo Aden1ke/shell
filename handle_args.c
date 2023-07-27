@@ -1,4 +1,5 @@
 #include "my_shell.h"
+
 /**
  * handle_arguments - handle arguments
  * @line: string to break down
@@ -44,6 +45,7 @@ void handle_arguments(char *line)
 		return;
 	}
 }
+
 /**
  * execve_helper - execute the command using execve
  * @command: the command to execute
@@ -61,8 +63,10 @@ int execve_helper(char *command, char *args[])
 		command_path = locate_path(command_path);
 		if (!command_path || access(command_path, X_OK) == -1)
 	{
-		perror("path error");
-		exit_status = 127;
+		if (errno == EACCES)
+			exit_status = (handle_error(args, 126));
+		else
+			exit_status = (handle_error(args, 127));
 		retry_with_next_path = 1;
 	}
 
@@ -70,27 +74,12 @@ int execve_helper(char *command, char *args[])
 	{
 		if (execve(command_path, args, environ) == -1)
 		{
-			perror("Execve Error");
-			exit_status = -1;
+			if (errno == EACCES)
+				exit_status = (handle_error(args, 126));
 		}
 		retry_with_next_path = 0;
-	}
 	}
 	while (retry_with_next_path)
 		;
 	return (exit_status);
-}
-/**
- * _strcmp - function that compares two strings.
- * @s1: pointer to the 1st string.
- * @s2: poniter to the 2nd string.
- * Return: Always 0.
- */
-int _strcmp(char *s1, char *s2)
-{
-	int i;
-
-	for (i = 0; s1[i] != '\0' && s1[i] == s2[i]; i++)
-		;
-	return (s1[i] - s2[i]);
 }

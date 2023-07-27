@@ -15,3 +15,68 @@ char *_strcpy(char *dest, const char *str)
 	dest[i] = '\0';
 	return (dest);
 }
+
+/**
+ * len_num - Counts the length of a num.
+ * @num: The number
+ * Return: The length.
+ */
+int len_num(int num)
+{
+	unsigned int numb;
+	int len = 1;
+
+	if (num < 0)
+	{
+		len++;
+		numb = num * -1;
+	}
+	else
+	{
+		numb = num;
+	}
+	while (numb > 9)
+	{
+		len++;
+		numb /= 10;
+	}
+
+	return (len);
+}
+
+/**
+ * _itoa - Converts an integer to a string.
+ * @num: The integer.
+ * Return: The converts
+ */
+char *_itoa(int num)
+{
+	char *buf;
+	int len = len_num(num);
+	unsigned int numb;
+
+	buf = malloc(sizeof(char) * (len + 1));
+	if (!buf)
+		return (NULL);
+
+	buf[len] = '\0';
+
+	if (num < 0)
+	{
+		numb = num * -1;
+		buf[0] = '-';
+	}
+	else
+	{
+		numb = num;
+	}
+
+	len--;
+	do {
+		buf[len] = (numb % 10) + '0';
+		numb /= 10;
+		len--;
+	} while (numb > 0);
+
+	return (buf);
+}
