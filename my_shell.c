@@ -23,8 +23,7 @@ int main(int argc, char *argv[])
 	{
 		while (!pipe)
 		{
-			if (!pipe)
-				write(STDOUT_FILENO, start, 2);
+			write(STDOUT_FILENO, start, 2);
 
 			data = my_getline(&buf, &size, stdin);
 			if (data == -1)
