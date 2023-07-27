@@ -26,9 +26,15 @@ int _atoi(char *s)
 	}
 	return (num * sign);
 }
+/**
+ * free_array - handle arguments
+ * @array: string to break down
+ * Return: void.
+ */
 void free_array(char **array)
 {
 	int i;
+
 	if (array == NULL)
 	{
 		return;

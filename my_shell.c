@@ -75,6 +75,11 @@ int handle_fork_process(char *command)
 	}
 	return (0);
 }
+/**
+ * free_buffer - handle arguments
+ * @buffer: string to break down
+ * Return: void.
+ */
 void free_buffer(char **buffer)
 {
 	if (buffer != NULL && *buffer != NULL)
