@@ -8,7 +8,7 @@
  */
 char *_strcpy(char *dest, const char *str)
 {
-	size_t i;
+	int i;
 
 	for (i = 0; str[i] != '\0'; i++)
 		dest[i] = str[i];
