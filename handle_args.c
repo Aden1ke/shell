@@ -17,22 +17,18 @@ int handle_arguments(char *line)
 		token = strtok(NULL, " \t\n");
 	}
 	command[i] = NULL;
+	if (_strcmp(command[0], "env") == 0)
+	{
+		print_array(environ);
+		return (0);
+	}
 	if (_strcmp(command[0], "exit") == 0)
 	{
-		if (i == 1)
-		{
-			return (0); 
-		}
-		else if (i == 2)
-		{
-			int status = _atoi(command[1]);
-			return (status);
-		}
-		else
-		{
-			perror("Usage: exit [status]");
-			return (-1);
-		}
+		return (handle_exit_command(command));
+	}
+	else if (_strcmp(command[0], "cd") == 0) 
+	{
+		return (handle_cd_command(command));
 	}
 	return (execve_helper(command[0], command));
 }
