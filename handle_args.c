@@ -17,6 +17,10 @@ int handle_arguments(char *line)
 		token = strtok(NULL, " \t\n");
 	}
 	command[i] = NULL;
+	if (_strcmp(command[0], "env") == 0)
+	{
+		return (print_array(environ));
+	}
 	if (_strcmp(command[0], "exit") == 0)
 	{
 		return (handle_exit_command(command));
@@ -46,14 +50,12 @@ int execve_helper(char *command, char *args[])
 			handle_error(args, 126);
 		else
 			handle_error(args, 127);
-		return (0);
 	}
 
 	if (execve(command_path, args, environ) == -1)
 	{
 		if (errno == EACCES)
 			handle_error(args, 126);
-		return (0);
 	}
 	return (0);
 }
