@@ -7,7 +7,7 @@
 int handle_exit_command(char **args)
 {
 	if (args[1] == NULL)
-		exit(0);
+		return (0);
 	else if (args[2] == NULL)
 	{
 		int status = _atoi(args[1]);
@@ -64,7 +64,7 @@ int handle_cd_command(char **args)
 
 	if (access(current_dir, F_OK) == -1)
 	{
-		perror("no access to file causing cd error");
+		perror("cd error");
 		return (-1);
 	}
 
