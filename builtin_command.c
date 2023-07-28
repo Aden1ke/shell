@@ -80,11 +80,5 @@ int handle_cd_command(char **args)
 		perror("Failed to get current working directory");
 	}
 
-	if (chdir(current_dir) == -1)
-	{
-		perror("cd error");
-		return (-1);
-	}
-
 	return (0);
 }

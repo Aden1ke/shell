@@ -13,7 +13,7 @@ char *get_env_value(const char *env_name)
 	{
 		if (_strncmp(env_name, *env, env_name_len) == 0)
 		{
-			return (*env + env_name_len);
+			return (*env + env_name_len + 1);
 		}
 		env++;
     }
@@ -34,12 +34,27 @@ void update_pwd(char *new_pwd)
 		env_str = _strcat("PWD=", new_pwd);
 		if (env_str)
 		{
-			putenv(env_str);
+			if (setenv("PWD", new_pwd, 1) == -1)
+			{
+				perror("Failed to update PWD environment variable");
+				exit(EXIT_FAILURE);
+			}
+			printf("New PWD: %s\n", new_pwd);
 		}
 		else
 		{
 			perror("Memory allocation error");
 			exit(EXIT_FAILURE);
 		}
+	}
+	else
+	{
+		perror("PWD environment variable not set");
+		exit(EXIT_FAILURE);
+	}
+	if (chdir(new_pwd) == -1)
+	{
+		perror("cd error");
+		exit(EXIT_FAILURE);
 	}
 }
