@@ -21,8 +21,10 @@ typedef struct list_s
 extern char **environ;
 char *name;
 int incr;
+extern bool should_exit;
 
 int handle_arguments(char *line);
+bool is_number(const char *str);
 int _strcmp(char *s1, char *s2);
 ssize_t my_getline(char **buffer, size_t *n, FILE *stream);
 ssize_t read_from_buffer(char **buffer, size_t *n, FILE *stream);

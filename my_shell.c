@@ -9,86 +9,108 @@
 int main(int argc, char *argv[])
 {
 	bool pipe = false;
-	char *start = "$ ", *buf = NULL, *new_line = "\n";
-	ssize_t data;
-	size_t size = 0;
-	int p_status;
 
 	argc = argc;
 	argv = argv;
-
 	if (!isatty(STDIN_FILENO))
 		pipe = true;
 	if (!pipe)
 	{
-		while (!pipe)
-		{
-			write(STDOUT_FILENO, start, 2);
-			data = my_getline(&buf, &size, stdin);
-			if (data == -1)
-			{
-				perror("getline error");
-				free(buf);
-				continue;
-			}
-
-			if (buf[data - 1] == '\n')
-			buf[data - 1] = '\0';
-
-			if (_strcmp(buf, "exit") == 0)
-			{
-				p_status = handle_arguments(buf);
-				free(buf);
-				return (p_status);
-			}
-			else
-			{
-				p_status = handle_fork_process(buf);
-				if (p_status != 0)
-				{
-					if (p_status == END_OF_FILE)
-					{
-						write(STDOUT_FILENO, new_line, 1);
-						free_buffer(&buf);
-						exit(EXIT_FAILURE);
-					}
-					return (p_status);
-				}
-			}
-		}
+		return (handle_interactive_mode());
 	}
 	else
 	{
-		while (1)
-		{
-			data = my_getline(&buf, &size, stdin);
-			if (data == -1)
-				break;
+		return (handle_non_interactive_mode());
+	}
+}
 
-			if (buf[data - 1] == '\n')
+/**
+ * handle_interactive_mode - Handle shell commands in interactive mode
+ */
+int handle_interactive_mode(void)
+{
+	char *start = "$ ";
+	char *buf = NULL, *new_line = "\n";
+	ssize_t data;
+	size_t size = 0;
+	int p_status;
+
+	while (1)
+	{
+		write(STDOUT_FILENO, start, 2);
+		data = my_getline(&buf, &size, stdin);
+		if (data == -1)
+		{
+			perror("getline error");
+			free(buf);
+			continue;
+		}
+
+		if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
 
-			if (_strcmp(buf, "exit") == 0)
+		if (_strcmp(buf, "exit") == 0)
+		{
+			p_status = handle_arguments(buf);
+			free(buf);
+			return (p_status);
+		}
+		else
+		{
+			p_status = handle_fork_process(buf);
+			if (p_status != 0)
 			{
-				p_status = handle_arguments(buf);
-				free(buf);
-				return (p_status);
-			}
-			else
-			{
-				p_status = handle_fork_process(buf);
-				free_buffer(&buf);
-				if (p_status != 0)
-
+				if (p_status == END_OF_FILE)
 				{
-					return (p_status);
-					exit(EXIT_SUCCESS);
+					write(STDOUT_FILENO, new_line, 1);
+					free_buffer(&buf);
+					exit(EXIT_FAILURE);
 				}
+				return (p_status);
 			}
 		}
 	}
 	free_buffer(&buf);
 	return (0);
+}
+/**
+ * handle_non_interactive_mode - Handle shell commands when reading from a pipe
+ */
+int handle_non_interactive_mode(void)
+{
+	char *buf = NULL;
+	ssize_t data;
+	size_t size = 0;
+	int p_status;
+
+	while (1)
+	{
+		data = my_getline(&buf, &size, stdin);
+		if (data == -1)
+			break;
+
+		if (buf[data - 1] == '\n')
+			buf[data - 1] = '\0';
+
+		if (_strcmp(buf, "exit") == 0)
+		{
+			p_status = handle_arguments(buf);
+			free(buf);
+			return (p_status);
+		}
+		else
+		{
+			p_status = handle_fork_process(buf);
+			free_buffer(&buf);
+			if (p_status != 0)
+			{
+				return (p_status);
+				exit(EXIT_SUCCESS);
+			}
+		}
+	}
+	free_buffer(&buf);
+	return 0;
 }
 /**
  * handle_fork_process - handle fork process
