@@ -50,6 +50,9 @@ int handle_interactive_mode(void)
 		if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
 
+		if (_strcmp(buf, "env") == 0)
+			return (print_array(environ));
+		
 		if (_strcmp(buf, "exit") == 0)
 		{
 			p_status = handle_arguments(buf);
@@ -87,6 +90,9 @@ int handle_non_interactive_mode(void)
 
 		if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
+		
+		if (_strcmp(buf, "env") == 0)
+			return (print_array(environ));
 
 		if (_strcmp(buf, "exit") == 0)
 		{
