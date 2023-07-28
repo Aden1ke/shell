@@ -36,7 +36,7 @@ int handle_interactive_mode(void)
 	size_t size = 0;
 	int p_status;
 
-	while (1)
+	while (1 && _builtin())
 	{
 		write(STDOUT_FILENO, start, 2);
 		data = my_getline(&buf, &size, stdin);
@@ -79,7 +79,7 @@ int handle_non_interactive_mode(void)
 	size_t size = 0;
 	int p_status;
 
-	while (1)
+	while (1 && _builtin())
 	{
 		data = my_getline(&buf, &size, stdin);
 		if (data == -1)

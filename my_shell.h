@@ -11,6 +11,7 @@
 #include <errno.h>
 
 #define END_OF_FILE -2
+#define _INT_MIN (-2147483648)
 extern char *current_working_directory;
 
 typedef struct list_s
@@ -59,5 +60,11 @@ char *_itoa(int num);
 char *error_126(char **args);
 char *error_127(char **args);
 int handle_error(char **args, int err);
+int print_array(char *array[]);
+int put_char(int s, char c);
+int put_int(int s, int num);
+int put_str(int s, char *str);
+int prints(int s, const char *fmt, char *s1, int num, char *s2);
+int _builtin(void);
 
 #endif
