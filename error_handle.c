@@ -67,7 +67,7 @@ char *error_127(char **args)
 }
 
 /**
- * create_error - Writes a custom error message.
+ * handle_error - Writes a custom error message.
  * @args:  Arguments.
  * @err: The error.
  * Return: The value.

@@ -51,14 +51,19 @@ int execve_helper(char *command, char *args[])
 		command_path = locate_path(command_path);
 	if (!command_path || access(command_path, X_OK) == -1)
 	{
-		perror("path error");
-		return (-1);
+		if (errno == EACCES)
+			handle_error(args, 126);
+		else
+			handle_error(args, 127);
+		return (0);
 	}
 
 	if (execve(command_path, args, environ) == -1)
-		{
-			perror("Execve Error");
-			return (-1);
-		}
+	{
+		if (errno == EACCES)
+			handle_error(args, 126);
+		return (0);
+	}
 	return (0);
 }
+
