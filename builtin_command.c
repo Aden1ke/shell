@@ -26,7 +26,6 @@ int handle_exit_command(char **args)
 		perror("Usage: exit [status]");
 		return (-1);
 	}
-	return (-1);
 }
 
 /**
@@ -36,30 +35,46 @@ int handle_exit_command(char **args)
  */
 int handle_cd_command(char **args)
 {
-	char *current_dir, *current_new_dir;
+	char *current_dir = NULL, *current_new_dir = NULL;
 
 	if (args[1] == NULL || _strcmp(args[1], "~") == 0)
 	{
-		current_dir = get_env_value("HOME");
-		if (current_dir == NULL)
+		char *home_dir = get_env_value("HOME");
+		if (home_dir == NULL)
 		{
-			perror("current environment not set");
-			return (-1);
-		} 
+			perror("HOME environment variable not set");
+			return (1);
+		}
+		if (chdir(home_dir) == -1)
+		{
+			perror("chdir error");
+			return (1);
+		}
+		printf("Changed directory to: %s\n", home_dir);
+		current_dir = home_dir;
 	}
 	else if (_strcmp(args[1], "-") == 0)
 	{
-		current_dir = get_env_value("OLDPWD");
-		if (current_dir == NULL)
+		char *old_pwd = get_env_value("OLDPWD");
+
+		if (old_pwd == NULL)
 		{
-			perror("OLDPWD environmentnot set");
-            return (-1);
+			perror("OLDPWD environment variable not set");
+			return (1);
 		}
-		printf("%s\n", current_dir);
+		if (chdir(old_pwd) == -1)
+		{
+			perror("chdir error");
+			return (1);
+		}
+		current_dir = old_pwd;
 	}
 	else
 	{
-		current_dir = args[1];
+		if (args[1][0] == '/')
+			current_dir = args[1];
+		else
+			current_dir = args[1];
 	}
 
 	if (access(current_dir, F_OK) == -1)
@@ -69,16 +84,18 @@ int handle_cd_command(char **args)
 	}
 
 	current_new_dir = getcwd(NULL, 0);
-	if (current_new_dir != NULL) 
+	if (current_new_dir != NULL)
 	{
 		update_pwd(current_new_dir);
-		putenv(_strcat("OLDPWD=", current_new_dir));
+		if (setenv("OLDPWD", current_new_dir, 1) == -1)
+		{
+			perror("Failed to update OLDPWD environment variable");
+			exit(EXIT_FAILURE);
+		}
 		free(current_new_dir);
 	}
 	else
-	{
-		perror("Failed to get current working directory");
-	}
 
+		perror("Failed to get current working directory");
 	return (0);
 }

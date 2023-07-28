@@ -1,5 +1,4 @@
 #include "my_shell.h"
-bool should_exit = false;
 /**
  * main - Simple shell program that runs shell commands
  * similar to the bash script
@@ -68,8 +67,6 @@ int handle_interactive_mode(void)
 		}
 	}
 	free_buffer(&buf);
-	if (should_exit)
-		exit(EXIT_FAILURE);
 	return (0);
 }
 /**
@@ -112,9 +109,7 @@ int handle_non_interactive_mode(void)
 		}
 	}
 	free_buffer(&buf);
-	if (should_exit)
-		exit(EXIT_FAILURE);
-	return 0;
+	return (0);
 }
 /**
  * handle_fork_process - handle fork process
@@ -145,8 +140,6 @@ int handle_fork_process(char *command)
 		{
 			exit_status = WEXITSTATUS(p_stat);
 			fflush(stdout);
-			if (exit_status != 0 && exit_status != END_OF_FILE)
-				should_exit = true;
 			return (exit_status);
 		}
 	}
