@@ -59,16 +59,13 @@ int handle_interactive_mode(void)
 		else
 		{
 			p_status = handle_fork_process(buf);
-			should_exit = true;
 			if (p_status != 0 && p_status != END_OF_FILE)
-			{
-				continue;
-			}
-			return (p_status);
+				return (p_status);
+			
 		}
 	}
 	free_buffer(&buf);
-	if (!should_exit)
+	if (should_exit)
 		exit(EXIT_FAILURE);
 	return (0);
 }
