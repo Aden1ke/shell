@@ -24,6 +24,8 @@ int incr;
 extern bool should_exit;
 
 int handle_arguments(char *line);
+int handle_non_interactive_mode(void);
+int handle_interactive_mode(void);
 bool is_number(const char *str);
 int _strcmp(char *s1, char *s2);
 ssize_t my_getline(char **buffer, size_t *n, FILE *stream);
