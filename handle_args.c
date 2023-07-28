@@ -19,8 +19,7 @@ int handle_arguments(char *line)
 	command[i] = NULL;
 	if (_strcmp(command[0], "env") == 0)
 	{
-		print_array(environ);
-		return (0);
+		return (print_array(environ));
 	}
 	if (_strcmp(command[0], "exit") == 0)
 	{
