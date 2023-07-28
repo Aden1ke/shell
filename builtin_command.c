@@ -13,7 +13,7 @@ int handle_exit_command(char **args)
 		int status = _atoi(args[1]);
 		if (status != -1)
 		{
-			exit(status);
+			return (status);
 		}
 		else
 		{
