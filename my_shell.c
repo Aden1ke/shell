@@ -1,4 +1,5 @@
 #include "my_shell.h"
+bool should_exit = false;
 /**
  * main - Simple shell program that runs shell commands
  * similar to the bash script
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
 int handle_interactive_mode(void)
 {
 	char *start = "$ ";
-	char *buf = NULL, *new_line = "\n";
+	char *buf = NULL;
 	ssize_t data;
 	size_t size = 0;
 	int p_status;
@@ -58,19 +59,17 @@ int handle_interactive_mode(void)
 		else
 		{
 			p_status = handle_fork_process(buf);
-			if (p_status != 0)
+			should_exit = true;
+			if (p_status != 0 && p_status != END_OF_FILE)
 			{
-				if (p_status == END_OF_FILE)
-				{
-					write(STDOUT_FILENO, new_line, 1);
-					free_buffer(&buf);
-					exit(EXIT_FAILURE);
-				}
-				return (p_status);
+				continue;
 			}
+			return (p_status);
 		}
 	}
 	free_buffer(&buf);
+	if (!should_exit)
+		exit(EXIT_FAILURE);
 	return (0);
 }
 /**
@@ -110,6 +109,8 @@ int handle_non_interactive_mode(void)
 		}
 	}
 	free_buffer(&buf);
+	if (should_exit)
+		exit(EXIT_FAILURE);
 	return 0;
 }
 /**
@@ -141,6 +142,8 @@ int handle_fork_process(char *command)
 		{
 			exit_status = WEXITSTATUS(p_stat);
 			fflush(stdout);
+			if (exit_status != 0 && exit_status != END_OF_FILE)
+				should_exit = true;
 			return (exit_status);
 		}
 	}
