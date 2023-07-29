@@ -10,7 +10,7 @@ int handle_exit_command(char **args)
 		return (0);
 	else if (args[2] == NULL)
 	{
-		int status = _atoi(args[1]);
+		int32_t status = _atoi(args[1]);
 		if (status != -1)
 		{
 			return (status);
