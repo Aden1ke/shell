@@ -72,7 +72,7 @@ int _strcompare(const char *str1, const char *str2, int n)
  * @dir: The new working directory.
  * Return: 0 on success, -1 on failure.
  */
-int set_working_dir(char **data, const char *dir)
+int set_working_dir(const char *dir)
 {
 	char old_dir[128] = {0};
 	char *pwd_value;
@@ -83,13 +83,13 @@ int set_working_dir(char **data, const char *dir)
 		return (-1);
 	}
 
-	pwd_value = get_env_value("PWD", data);
+	pwd_value = getenv("PWD");
 	if (pwd_value == NULL)
 	{
 		printf("PWD environment variable not found.\n");
-        return (-1);
+		return (-1);
 	}
-	if (setenv("OLDPWD", get_env_value("PWD", data), 1) == -1)
+	if (setenv("OLDPWD", pwd_value, 1) == -1)
 	{
 		perror("Failed to update OLDPWD environment variable");
 		return (-1);
@@ -100,7 +100,6 @@ int set_working_dir(char **data, const char *dir)
 		perror("Failed to get current working directory");
 		return (-1);
 	}
-
 	if (setenv("PWD", old_dir, 1) == -1)
 	{
 		perror("Failed to update PWD environment variable");
@@ -116,7 +115,7 @@ int set_working_dir(char **data, const char *dir)
  */
 int builtin_cd(char **data)
 {
-	char *dir_home = get_env_value("HOME", data), *dir_old = NULL;
+	char *dir_home = getenv("HOME"), *dir_old = NULL;
 	char old_dir[128] = {0};
 	int error_code = 0;
 
@@ -124,10 +123,10 @@ int builtin_cd(char **data)
 	{
 		if (_strcompare(data[1], "-", 0))
 		{
-			dir_old = get_env_value("OLDPWD", data);
+			dir_old = getenv("OLDPWD");
 			if (dir_old)
 			{
-				error_code = set_working_dir(data, dir_old);
+				error_code = set_working_dir(dir_old);
 			printf("%s\n", dir_old);
 			}
 			else
@@ -139,7 +138,7 @@ int builtin_cd(char **data)
 		}
 		else
 		{
-			return (set_working_dir(data, data[1]));
+			return (set_working_dir(data[1]));
 		}
 	}
 	else
@@ -147,7 +146,7 @@ int builtin_cd(char **data)
 		if (!dir_home)
 			dir_home = getcwd(old_dir, 128);
 
-		return (set_working_dir(data, dir_home));
+		return (set_working_dir(dir_home));
 	}
 	return (0);
 }
