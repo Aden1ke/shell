@@ -2,6 +2,7 @@
 
 /**
  * handle_interactive_mode - Handle shell commands in interactive mode
+ * Return: void.
  */
 int handle_interactive_mode(void)
 {
@@ -52,6 +53,7 @@ int handle_interactive_mode(void)
 
 /**
  * handle_non_interactive_mode - Handle shell commands when reading from a pipe
+ * Return: void.
  */
 int handle_non_interactive_mode(void)
 {

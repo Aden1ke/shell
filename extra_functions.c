@@ -8,6 +8,7 @@ int _atoi(const char *s)
 {
 	int sign = 1;
 	unsigned int num = 0;
+	int digit_seen = 0;
 
 	for (; *s != '\0'; s++)
 	{
@@ -18,11 +19,14 @@ int _atoi(const char *s)
 		else if (*s >= '0' && *s <= '9')
 		{
 			num = (num * 10) + (*s - '0');
+			digit_seen = 1;
 		}
-		else if (num > 0)
-		{
-			break;
-		}
+		else
+			return (-1);
+	}
+	if (!digit_seen)
+	{
+		return (-1);
 	}
 	return (num * sign);
 }

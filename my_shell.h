@@ -33,6 +33,7 @@ extern bool should_exit;
 int handle_arguments(char *line);
 int handle_non_interactive_mode(void);
 int handle_interactive_mode(void);
+int handle_builtin_or_process(char *command);
 bool is_number(const char *str);
 int _strcmp(char *s1, char *s2);
 ssize_t my_getline(char **buffer, size_t *n, FILE *stream);
@@ -74,8 +75,14 @@ int put_int(int s, int num);
 int put_str(int s, char *str);
 int prints(int s, const char *fmt, char *s1, int num, char *s2);
 int exit_status(char *exit_stat);
+<<<<<<< HEAD
 int _unsetenv(char **args);
 int _setenv(char **args);
 int _env(char **args);
+=======
+int handle_cd_to_home();
+int handle_cd_to_oldpwd();
+int handle_change_directory(char *path);
+>>>>>>> refs/remotes/origin/master
 
 #endif

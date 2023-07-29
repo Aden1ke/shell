@@ -45,6 +45,7 @@ int handle_fork_process(char *command)
 	if (my_pid == 0)
 	{
 		int status = handle_arguments(command);
+
 		exit(status);
 	}
 	else

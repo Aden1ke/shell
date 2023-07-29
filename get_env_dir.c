@@ -7,6 +7,7 @@
 char *get_env_value(const char *env_name)
 {
 	char *env_value = getenv(env_name);
+
 	return (env_value);
 }
 

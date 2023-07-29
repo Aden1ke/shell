@@ -21,10 +21,8 @@ char **get_env(const char *var)
 
 /**
  * fill_path - Copies path but also replace
- * colons (:) with current working directory.
  * @path: The colon-separated list of directories.
  * Return: A copy of path with any  colons replace
- * with the current working directory.
  */
 char *fill_path(char *path)
 {
@@ -71,7 +69,6 @@ char *fill_path(char *path)
 	return (path_copy);
 }
 
-
 /**
  * get_path - Tokenizes a colon-separated list of
  * directories into a linked list.
@@ -107,7 +104,7 @@ list_t *get_path(char *path)
 }
 
 /**
- * Locate_path - Locates a command in the PATH.
+ * locate_path - Locates a command in the PATH.
  * @com: The command to locate.
  * Return: If error occurs and com is not located
  * NULL. Otherwisethe full pathname of the com.

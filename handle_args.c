@@ -25,7 +25,7 @@ int handle_arguments(char *line)
 	{
 		return (handle_exit_command(command));
 	}
-	else if (_strcmp(command[0], "cd") == 0) 
+	else if (_strcmp(command[0], "cd") == 0)
 	{
 		return (handle_cd_command(command));
 	}
@@ -61,4 +61,3 @@ int execve_helper(char *command, char *args[])
 	}
 	return (0);
 }
-
