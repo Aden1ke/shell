@@ -12,8 +12,12 @@ int handle_exit_command(char **args)
 	}
 	else if (args[2] == NULL)
 	{
+<<<<<<< HEAD
 		int status = _atoi(args[1]);
 
+=======
+		int32_t status = _atoi(args[1]);
+>>>>>>> 0575a4cc30b425aaed9771d72ed6a1fe4fe83026
 		if (status != -1)
 		{
 			return (status);
