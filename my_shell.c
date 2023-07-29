@@ -1,4 +1,7 @@
 #include "my_shell.h"
+char *name = NULL;
+int incr = 0;
+bool should_exit = false;
 /**
  * main - Simple shell program that runs shell commands
  * similar to the bash script
@@ -24,8 +27,11 @@ int main(int argc, char *argv[])
 	}
 }
 
+
 /**
- * handle_interactive_mode - Handle shell commands in interactive mode
+ * handle_interactive_mode - Handle shell command
+ * in interactive mode
+ * Return: void.
  */
 int handle_interactive_mode(void)
 {
@@ -33,7 +39,7 @@ int handle_interactive_mode(void)
 	char *buf = NULL;
 	ssize_t data;
 	size_t size = 0;
-	int p_status;
+	int p_status, builtin_status;
 
 	while (1)
 	{
@@ -48,36 +54,38 @@ int handle_interactive_mode(void)
 
 		if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
-
-		if (_strcmp(buf, "env") == 0)
-			return (print_array(environ));
-		
-		if (_strcmp(buf, "exit") == 0)
+		builtin_status = handle_builtin(buf, NULL);
+		if (builtin_status != -1)
 		{
-			p_status = handle_arguments(buf);
 			free(buf);
-			return (p_status);
+			return (builtin_status);
+		}
+		if (should_exit)
+		{
+			free(buf);
+			return (0);
 		}
 		else
 		{
 			p_status = handle_fork_process(buf);
 			if (p_status != 0 && p_status != END_OF_FILE)
 				return (p_status);
-			
 		}
 	}
 	free_buffer(&buf);
 	return (0);
 }
 /**
- * handle_non_interactive_mode - Handle shell commands when reading from a pipe
+ * handle_non_interactive_mode - Handle shell commands
+ * when reading from a pipe
+ * Return: void.
  */
 int handle_non_interactive_mode(void)
 {
 	char *buf = NULL;
 	ssize_t data;
 	size_t size = 0;
-	int p_status;
+	int p_status, builtin_status;
 
 	while (1)
 	{
@@ -87,15 +95,17 @@ int handle_non_interactive_mode(void)
 
 		if (buf[data - 1] == '\n')
 			buf[data - 1] = '\0';
-		
-		if (_strcmp(buf, "env") == 0)
-			return (print_array(environ));
 
-		if (_strcmp(buf, "exit") == 0)
+		builtin_status = handle_builtin(buf, NULL);
+		if (builtin_status != -1)
 		{
-			p_status = handle_arguments(buf);
 			free(buf);
-			return (p_status);
+			return (builtin_status);
+		}
+		if (should_exit)
+		{
+			free(buf);
+			return (0);
 		}
 		else
 		{
@@ -130,8 +140,8 @@ int handle_fork_process(char *command)
 	}
 	if (my_pid == 0)
 	{
-		int status = handle_arguments(command);
-		exit(status);
+		handle_arguments(command);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
@@ -146,15 +156,29 @@ int handle_fork_process(char *command)
 	return (0);
 }
 /**
- * free_buffer - handle arguments
- * @buffer: string to break down
- * Return: void.
+ * handle_builtin - Handle built-in shell commands
+ * @command: The command to handle
+ * @args: arguments
+ * Return: Return status for built-in commands, -1 if not a built-in command.
  */
-void free_buffer(char **buffer)
+int handle_builtin(char *command, char **args)
 {
-	if (buffer != NULL && *buffer != NULL)
+	if (_strcmp(command, "env") == 0)
 	{
-		free(*buffer);
-		*buffer = NULL;
+		print_array(environ);
+		return (-1);
 	}
+	else if (_strcmp(command, "exit") == 0)
+	{
+		if (args == NULL || args[1] == NULL)
+			return (0);
+		else
+			return (handle_exit_command(args));
+	}
+	else if (_strcmp(command, "cd") == 0)
+	{
+		return (handle_cd_command(&command));
+	}
+
+	return (-1);
 }

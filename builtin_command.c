@@ -7,12 +7,16 @@
 int handle_exit_command(char **args)
 {
 	if (args[1] == NULL)
-		return (0);
+	{
+		should_exit = true;
+		return 0;
+	}
 	else if (args[2] == NULL)
 	{
 		int status = _atoi(args[1]);
 		if (status != -1)
 		{
+			should_exit = true;
 			return (status);
 		}
 		else

@@ -8,7 +8,7 @@
 int handle_arguments(char *line)
 {
 	char *command[1000], *token;
-	int i = 0;
+	int i = 0, status, builtin_status;
 
 	token = strtok(line, " \t\n");
 	while (token != NULL)
@@ -17,19 +17,23 @@ int handle_arguments(char *line)
 		token = strtok(NULL, " \t\n");
 	}
 	command[i] = NULL;
-	if (_strcmp(command[0], "env") == 0)
+	while (i > 0)
 	{
-		return (print_array(environ));
+		builtin_status = handle_builtin(command[0], command);
+		if (builtin_status != -1)
+		{
+			return (builtin_status);
+		}
+		status = execve_helper(command[0], command);
+		if (status != 0)
+		{
+			perror("Command execution error");
+			return (status);
+		}
+		i--;
 	}
-	else if (_strcmp(command[0], "exit") == 0)
-	{
-		return (handle_exit_command(command));
-	}
-	else if (_strcmp(command[0], "cd") == 0) 
-	{
-		return (handle_cd_command(command));
-	}
-	return (execve_helper(command[0], command));
+
+	return (0);
 }
 
 /**
@@ -46,17 +50,14 @@ int execve_helper(char *command, char *args[])
 		command_path = locate_path(command_path);
 	if (!command_path || access(command_path, X_OK) == -1)
 	{
-		if (errno == EACCES)
-			handle_error(args, 126);
-		else
-			handle_error(args, 127);
+		perror("path  error");
+		return (-1);
 	}
 
 	if (execve(command_path, args, environ) == -1)
 	{
-		if (errno == EACCES)
-			handle_error(args, 126);
+		perror("Execve Error");
+		return (-1);
 	}
 	return (0);
 }
-
