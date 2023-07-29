@@ -86,5 +86,6 @@ int handle_change_directory(char *path);
 char *dup_str(char *str);
 char *path(char *command);
 char **str_tok(char *str, char delim);
+char **_get_env(const char *var);
 
 #endif
