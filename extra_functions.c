@@ -72,16 +72,20 @@ void free_array(char **array)
  */
 void normalize_path(char *path) 
 {
-	int i;
+	int i, j;
 	int len = _strlen(path);
 
-	for (i = 1; i < len; i++)
+	for (i = len - 1; i >= 0 && path[i] == '/'; i--)
+		path[i] = '\0';
+
+	j = 0;
+	for (i = 0; i < len; i++)
 	{
-		if (path[i] == '/' && path[i - 1] == '/')
+		if (path[i] != '\0')
 		{
-			memmove(&path[i - 1], &path[i], len - i);
-			len--;
-			i--;
+			path[j] = path[i];
+			j++;
 		}
 	}
+	path[j] = '\0';
 }
