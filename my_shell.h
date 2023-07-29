@@ -75,14 +75,11 @@ int put_int(int s, int num);
 int put_str(int s, char *str);
 int prints(int s, const char *fmt, char *s1, int num, char *s2);
 int exit_status(char *exit_stat);
-<<<<<<< HEAD
 int _unsetenv(char **args);
 int _setenv(char **args);
 int _env(char **args);
-=======
 int handle_cd_to_home();
 int handle_cd_to_oldpwd();
 int handle_change_directory(char *path);
->>>>>>> refs/remotes/origin/master
 
 #endif
