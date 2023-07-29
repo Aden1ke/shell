@@ -7,7 +7,7 @@
  */
 int handle_arguments(char *line)
 {
-	char *command[1000], *token;
+	char *command[8096], *token;
 	int i = 0;
 
 	token = strtok(line, " \t\n");
@@ -23,7 +23,8 @@ int handle_arguments(char *line)
 	}
 	else if (_strcmp(command[0], "exit") == 0)
 	{
-		stat_ = exit_status(command[1]);
+		exit_status(command[1]);
+		free_array(command);
 		return (0);
 	}
 	else if (_strcmp(command[0], "cd") == 0) 
