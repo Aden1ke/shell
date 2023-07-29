@@ -31,6 +31,20 @@ int _atoi(const char *s)
 	return (num * sign);
 }
 /**
+ * _islower - Write a function that checks for lowercase character.
+ * @c:value to be checked.
+ * Return: Always 0.
+ */
+int _islower(int c)
+{
+	if (c >= 'a' && c <= 'z')
+	{
+		return (1);
+	}
+	else
+		return (0);
+}
+/**
  * free_array - handle arguments
  * @array: string to break down
  * Return: void.
@@ -51,3 +65,4 @@ void free_array(char **array)
 
 	free(array);
 }
+
