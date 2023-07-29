@@ -41,11 +41,12 @@ int _setenv(char **args)
 	for (index = 0; environ[index]; index++)
 		new_env[index] = environ[index];
 
-	free(environ);
+
 	environ = new_env;
 	environ[index] = new_val;
 	environ[index + 1] = NULL;
-
+	free(new_env);
+	free(new_val);
 	return (0);
 }
 
@@ -83,9 +84,9 @@ int _unsetenv(char **args)
 		new_env[index2] = environ[index];
 		index2++;
 	}
-	free(environ);
+
 	environ = new_env;
 	environ[size - 1] = NULL;
-
+	free(new_env);
 	return (0);
 }

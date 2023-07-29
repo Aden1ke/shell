@@ -31,11 +31,13 @@ int handle_arguments(char *line)
 	}
 	else if (_strcmp(command[0], "setenv") == 0)
 	{
-		return (_setenv(command));
+		_setenv(command);
+		return (0);
 	}
 	else if (_strcmp(command[0], "unsetenv") == 0)
 	{
-		return (_unsetenv(command));
+		_unsetenv(command);
+		return (0);
 	}
 	else
 		return (execve_helper(command[0], command));
