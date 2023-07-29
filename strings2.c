@@ -55,7 +55,7 @@ char *_itoa(int num)
 	int len = len_num(num);
 	unsigned int numb;
 
-	buf = malloc(sizeof(char) * (len + 1));
+	buf = malloc(sizeof(char) * (len + 4));
 	if (!buf)
 		return (NULL);
 
