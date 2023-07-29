@@ -75,14 +75,16 @@ int handle_non_interactive_mode(void)
 		{
 			p_status = print_array(environ);
 			free(buf);
-			return (p_status);
+			if (p_status != 0)
+				return (p_status);
 		}
 
 		if (buf)
 		{
 			p_status = handle_arguments(buf);
 			free(buf);
-			return (p_status);
+			if (p_status != 0)
+				return (p_status);
 		}
 		else
 		{

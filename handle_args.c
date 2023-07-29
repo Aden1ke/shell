@@ -37,7 +37,8 @@ int handle_arguments(char *line)
 	{
 		return (_unsetenv(command));
 	}
-	return (execve_helper(command[0], command));
+	else
+		return (execve_helper(command[0], command));
 }
 
 /**

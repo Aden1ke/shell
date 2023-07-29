@@ -75,6 +75,7 @@ int _strcompare(const char *str1, const char *str2, int n)
 int set_working_dir(char **data, const char *dir)
 {
 	char old_dir[128] = {0};
+	char *pwd_value;
 
 	if (chdir(dir) == -1)
 	{
@@ -82,6 +83,12 @@ int set_working_dir(char **data, const char *dir)
 		return (-1);
 	}
 
+	pwd_value = get_env_value("PWD", data);
+	if (pwd_value == NULL)
+	{
+		printf("PWD environment variable not found.\n");
+        return (-1);
+	}
 	if (setenv("OLDPWD", get_env_value("PWD", data), 1) == -1)
 	{
 		perror("Failed to update OLDPWD environment variable");
@@ -119,8 +126,15 @@ int builtin_cd(char **data)
 		{
 			dir_old = get_env_value("OLDPWD", data);
 			if (dir_old)
+			{
 				error_code = set_working_dir(data, dir_old);
-			printf("%s\n", get_env_value("PWD", data));
+			printf("%s\n", dir_old);
+			}
+			else
+			{
+				printf("OLDPWD not found in environment variables.\n");
+				error_code = -1;
+			}
 			return (error_code);
 		}
 		else
