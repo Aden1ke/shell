@@ -74,17 +74,25 @@ void normalize_path(char *path)
 {
 	int i, j;
 	int len = _strlen(path);
-
-	for (i = len - 1; i >= 0 && path[i] == '/'; i--)
-		path[i] = '\0';
+	int is_slash = 0;
 
 	j = 0;
 	for (i = 0; i < len; i++)
 	{
-		if (path[i] != '\0')
+		if (path[i] == '/')
+		{
+			if (!is_slash)
+			{
+				path[j] = path[i];
+				j++;
+			}
+			is_slash = 1;
+		}
+		else
 		{
 			path[j] = path[i];
 			j++;
+			is_slash = 0;
 		}
 	}
 	path[j] = '\0';

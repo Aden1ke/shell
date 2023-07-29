@@ -51,7 +51,7 @@ int _strcompare(const char *str1, const char *str2, int n)
  */
 int set_working_dir(const char *dir)
 {
-	char old_dir[128] = {0};
+	char old_dir[200] = {0};
 	char *pwd_value;
 
 	pwd_value = getenv("PWD");
@@ -78,13 +78,11 @@ int set_working_dir(const char *dir)
 		perror("Failed to update OLDPWD environment variable");
 		return (-1);
 	}
-
 	if (getcwd(old_dir, 128) == NULL)
 	{
 		perror("Failed to get current working directory");
 		return (-1);
 	}
-
 	return (0);
 }
 /**
@@ -95,7 +93,7 @@ int set_working_dir(const char *dir)
 int builtin_cd(char **data)
 {
 	char *dir_home = getenv("HOME"), *dir_old = NULL;
-	char old_dir[128] = {0};
+	char old_dir[200] = {0};
 
 	if (data[1])
 	{
@@ -113,14 +111,6 @@ int builtin_cd(char **data)
 				printf("OLDPWD not found in environment variables.\n");
 				return (-1);
 			}
-			if (data[2])
-			{
-				execute_command(data + 2);
-			}
-			else
-			{
-				printf("%s\n", dir_old);
-			}
 			return (0);
 		}
 		else
@@ -131,7 +121,7 @@ int builtin_cd(char **data)
 	else
 	{
 		if (!dir_home)
-			dir_home = getcwd(old_dir, 128);
+			dir_home = getcwd(old_dir, 200);
 
 		return (set_working_dir(dir_home));
 	}
