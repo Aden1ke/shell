@@ -6,23 +6,41 @@
  */
 int handle_exit_command(char **tokens)
 {
-	int i;
-
-	if (tokens[1] != NULL)
-	{ 
-		for (i = 0; tokens[1][i]; i++)
+	char *arg;
+	int i, status;
+	if (tokens[1] == NULL)
+	{
+		return (0);
+	}
+	else if (tokens[2] == NULL)
+	{
+		arg = tokens[1];
+		for (i = 0; arg[i] != '\0'; i++)
 		{
-			if ((tokens[1][i] < '0' || tokens[1][i] > '9') && tokens[1][i] != '+')
+			if ((arg[i] < '0' || arg[i] > '9') && arg[i] != '+')
 			{
-				errno = 2;
-				return (2);
+				perror("Invalid argument for exit command");
+				return (-1);
 			}
 		}
-		errno = _atoi(tokens[1]);
+		status = _atoi(arg);
+		if (status != -1)
+		{
+			return (status);
+		}
+		else
+		{
+			perror("Invalid argument for exit command");
+			return -1;
+		}
 	}
-	free_array(tokens);
-	exit(errno);
+	else
+	{
+		perror("Usage: exit [status]");
+		return -1;
+	}
 }
+
 /**
  * get_env_value - Gets the value of an environment.
  * @env_name: The name of the environment variable.
