@@ -23,7 +23,8 @@ int handle_arguments(char *line)
 	}
 	else if (_strcmp(command[0], "exit") == 0)
 	{
-		return (handle_exit_command(command));
+		stat_ = exit_status(command[1]);
+		return (0);
 	}
 	else if (_strcmp(command[0], "cd") == 0) 
 	{

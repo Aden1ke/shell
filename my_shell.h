@@ -22,6 +22,11 @@ typedef struct list_s
 extern char **environ;
 char *name;
 int incr;
+int stat_;
+char *buffer;
+char **command;
+int first;
+char *shell;
 extern bool should_exit;
 
 int handle_arguments(char *line);
@@ -67,5 +72,6 @@ int put_char(int s, char c);
 int put_int(int s, int num);
 int put_str(int s, char *str);
 int prints(int s, const char *fmt, char *s1, int num, char *s2);
+int exit_status(char *exit_stat);
 
 #endif
