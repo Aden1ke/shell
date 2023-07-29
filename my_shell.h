@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <stdint.h>
 
 #define END_OF_FILE -2
 #define _INT_MIN (-2147483648)
@@ -22,7 +23,7 @@ typedef struct list_s
 extern char **environ;
 char *name;
 int incr;
-int stat_;
+int32_t stat_;
 char *buffer;
 char **command;
 int first;
@@ -60,7 +61,7 @@ int handle_cd_command(char **args);
 int handle_exit_command(char **args);
 void free_buffer(char **buffer);
 void free_array(char **array);
-int _atoi(char *s);
+int _atoi(const char *s);
 int handle_piped_input(char *buf, size_t size);
 int len_num(int num);
 char *_itoa(int num);

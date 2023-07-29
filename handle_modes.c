@@ -34,9 +34,9 @@ int handle_interactive_mode(void)
 
 		if (_strcmp(buf, "exit") == 0)
 		{
-			p_status = handle_arguments(buf);
+			handle_arguments(buf);
 			free(buf);
-			return (p_status);
+			exit(1000);
 		}
 		else
 		{
@@ -78,9 +78,9 @@ int handle_non_interactive_mode(void)
 
 		if (_strcmp(buf, "exit") == 0)
 		{
-			p_status = handle_arguments(buf);
+			handle_arguments(buf);
 			free(buf);
-			return (p_status);
+			exit(1000);
 		}
 		else
 		{

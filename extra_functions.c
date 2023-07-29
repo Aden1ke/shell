@@ -4,7 +4,7 @@
  * @s: pointer to a string.
  * Return: Always 0.
  */
-int _atoi(char *s)
+int _atoi(const char *s)
 {
 	int sign = 1;
 	unsigned int num = 0;
