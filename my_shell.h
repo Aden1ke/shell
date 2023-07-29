@@ -47,7 +47,7 @@ char *_strcat(char *dest, const char *str);
 char *_strncat(char *dest, const char *str, size_t n);
 int _strncmp(const char *str1, const char *str2, size_t n);
 char *_strcpy(char *dest, const char *str);
-char **get_env(const char *var);
+char *get_env(const char *var);
 char *fill_path(char *path);
 list_t *get_path(char *path);
 char *locate_path(char *com);
@@ -83,5 +83,8 @@ int _env(char **args);
 int handle_cd_to_home();
 int handle_cd_to_oldpwd();
 int handle_change_directory(char *path);
+char *dup_str(char *str);
+char *path(char *command);
+char **str_tok(char *str, char delim);
 
 #endif
