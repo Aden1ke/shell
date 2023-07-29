@@ -19,7 +19,7 @@ int handle_exit_command(char **tokens)
 		{
 			if ((arg[i] < '0' || arg[i] > '9') && arg[i] != '+')
 			{
-				perror("Invalid argument for exit command");
+				fprintf(stderr, "hsh: exit: Illegal number: %s\n", arg);;
 				return (-1);
 			}
 		}
@@ -30,7 +30,7 @@ int handle_exit_command(char **tokens)
 		}
 		else
 		{
-			perror("Invalid argument for exit command");
+			fprintf(stderr, "hsh: exit: Illegal number: %s\n", arg);
 			return -1;
 		}
 	}
