@@ -5,144 +5,18 @@
  * Return: If no env variable - NULL.
  * Otherwise - a pointer to the env variable.
  */
-char **get_env(const char *var)
+char *get_env(const char *var)
 {
-	int start, len;
+	int i, len = _strlen(var);
+	char *val = NULL;
 
-	len = _strlen(var);
-	for (start = 0; environ[start]; start++)
+	for (i = 0; environ[i]; i++)
 	{
-		if (_strncmp(var, environ[start], len) == 0)
-			return (&environ[start]);
-	}
-
-	return (NULL);
-}
-
-/**
- * fill_path - Copies path but also replace
- * @path: The colon-separated list of directories.
- * Return: A copy of path with any  colons replace
- */
-char *fill_path(char *path)
-{
-	int i, len = 0;
-	char *path_copy, *pwd;
-
-	pwd = *(get_env("PWD")) + 4;
-	for (i = 0; path[i]; i++)
-	{
-		if (path[i] == ':')
+		if (!_strncmp(environ[i], var, len) && environ[i][len] == '=')
 		{
-			if (path[i + 1] == ':' || i == 0 || path[i + 1] == '\0')
-				len += _strlen(pwd) + 1;
-			else
-				len++;
-		}
-		else
-			len++;
-	}
-	path_copy = malloc(sizeof(char) * (len + 1));
-	if (!path_copy)
-		return (NULL);
-	path_copy[0] = '\0';
-	for (i = 0; path[i]; i++)
-	{
-		if (path[i] == ':')
-		{
-			if (i == 0)
-			{
-				_strcat(path_copy, pwd);
-				_strcat(path_copy, ":");
-			}
-			else if (path[i + 1] == ':' || path[i + 1] == '\0')
-			{
-				_strcat(path_copy, ":");
-				_strcat(path_copy, pwd);
-			}
-			else
-				_strcat(path_copy, ":");
-		}
-		else
-			_strncat(path_copy, &path[i], 1);
-	}
-	return (path_copy);
-}
-
-/**
- * get_path - Tokenizes a colon-separated list of
- * directories into a linked list.
- * @path: The colon-separated list of directories.
- * Return: A pointer to the linked list.
- */
-list_t *get_path(char *path)
-{
-	int start;
-	char **dirs, *path_copy;
-	list_t *head = NULL;
-
-	path_copy = fill_path(path);
-	if (!path_copy)
-		return (NULL);
-	dirs = _strtok(path_copy, ":");
-	free(path_copy);
-	if (!dirs)
-		return (NULL);
-
-	for (start = 0; dirs[start]; start++)
-	{
-		if (node_end(&head, dirs[start]) == NULL)
-		{
-			free_list(head);
-			free(dirs);
-			return (NULL);
+			val = environ[i] + _strlen(var) + 1;
+			return (val);
 		}
 	}
-	free(dirs);
-
-	return (head);
-}
-
-/**
- * locate_path - Locates a command in the PATH.
- * @com: The command to locate.
- * Return: If error occurs and com is not located
- * NULL. Otherwisethe full pathname of the com.
- */
-char *locate_path(char *com)
-{
-	char **path, *temp;
-	list_t *dirs, *head;
-	struct stat st;
-
-	path = get_env("PATH");
-	if (!path || !(*path))
-		return (NULL);
-
-	dirs = get_path(*path + 5);
-	head = dirs;
-
-	while (dirs)
-	{
-		temp = malloc(_strlen(dirs->dir) + _strlen(com) + 2);
-		if (!temp)
-			return (NULL);
-
-		_strcpy(temp, dirs->dir);
-		_strcat(temp, "/");
-		_strcat(temp, com);
-
-		if (stat(temp, &st) == 0)
-		{
-			free_list(head);
-			return (temp);
-		}
-
-		dirs = dirs->next;
-		free(temp);
-	}
-
-	free_list(head);
-
-	return (NULL);
+	return (val);
 }
