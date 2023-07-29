@@ -33,11 +33,11 @@ int handle_interactive_mode(void)
 			return (p_status);
 		}
 
-		if (_strcmp(buf, "exit") == 0)
+		if (buf)
 		{
-			handle_arguments(buf);
+			p_status = handle_arguments(buf);
 			free(buf);
-			exit(1000);
+			return (p_status);
 		}
 		else
 		{
@@ -78,11 +78,11 @@ int handle_non_interactive_mode(void)
 			return (p_status);
 		}
 
-		if (_strcmp(buf, "exit") == 0)
+		if (buf)
 		{
-			handle_arguments(buf);
+			p_status = handle_arguments(buf);
 			free(buf);
-			exit(1000);
+			return (p_status);
 		}
 		else
 		{
