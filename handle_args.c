@@ -29,6 +29,14 @@ int handle_arguments(char *line)
 	{
 		return (handle_cd_command(command));
 	}
+	else if (_strcmp(command[0], "setenv") == 0)
+	{
+		return (_setenv(command));
+	}
+	else if (_strcmp(command[0], "unsetenv") == 0)
+	{
+		return (_unsetenv(command));
+	}
 	return (execve_helper(command[0], command));
 }
 
