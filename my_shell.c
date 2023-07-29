@@ -1,11 +1,5 @@
 #include "my_shell.h"
-<<<<<<< HEAD
-char *name = NULL;
-int incr = 0;
-bool should_exit = false;
-=======
 
->>>>>>> 1eee9c11927c4b308f76dec0ebf588aab8e9ac1c
 /**
  * main - Simple shell program that runs shell commands
  * similar to the bash script
@@ -31,104 +25,7 @@ int main(int argc, char *argv[])
 	}
 }
 
-
 /**
-<<<<<<< HEAD
- * handle_interactive_mode - Handle shell command
- * in interactive mode
- * Return: void.
- */
-int handle_interactive_mode(void)
-{
-	char *start = "$ ";
-	char *buf = NULL;
-	ssize_t data;
-	size_t size = 0;
-	int p_status, builtin_status;
-
-	while (1)
-	{
-		write(STDOUT_FILENO, start, 2);
-		data = my_getline(&buf, &size, stdin);
-		if (data == -1)
-		{
-			perror("getline error");
-			free(buf);
-			continue;
-		}
-
-		if (buf[data - 1] == '\n')
-			buf[data - 1] = '\0';
-		builtin_status = handle_builtin(buf, NULL);
-		if (builtin_status != -1)
-		{
-			free(buf);
-			return (builtin_status);
-		}
-		if (should_exit)
-		{
-			free(buf);
-			return (0);
-		}
-		else
-		{
-			p_status = handle_fork_process(buf);
-			if (p_status != 0 && p_status != END_OF_FILE)
-				return (p_status);
-		}
-	}
-	free_buffer(&buf);
-	return (0);
-}
-/**
- * handle_non_interactive_mode - Handle shell commands
- * when reading from a pipe
- * Return: void.
- */
-int handle_non_interactive_mode(void)
-{
-	char *buf = NULL;
-	ssize_t data;
-	size_t size = 0;
-	int p_status, builtin_status;
-
-	while (1)
-	{
-		data = my_getline(&buf, &size, stdin);
-		if (data == -1)
-			break;
-
-		if (buf[data - 1] == '\n')
-			buf[data - 1] = '\0';
-
-		builtin_status = handle_builtin(buf, NULL);
-		if (builtin_status != -1)
-		{
-			free(buf);
-			return (builtin_status);
-		}
-		if (should_exit)
-		{
-			free(buf);
-			return (0);
-		}
-		else
-		{
-			p_status = handle_fork_process(buf);
-			free_buffer(&buf);
-			if (p_status != 0)
-			{
-				return (p_status);
-				exit(EXIT_SUCCESS);
-			}
-		}
-	}
-	free_buffer(&buf);
-	return (0);
-}
-/**
-=======
->>>>>>> 1eee9c11927c4b308f76dec0ebf588aab8e9ac1c
  * handle_fork_process - handle fork process
  * to create reapeted process
  * @command: string to break down
@@ -147,8 +44,9 @@ int handle_fork_process(char *command)
 	}
 	if (my_pid == 0)
 	{
-		handle_arguments(command);
-		exit(EXIT_SUCCESS);
+		int status = handle_arguments(command);
+
+		exit(status);
 	}
 	else
 	{
@@ -164,29 +62,15 @@ int handle_fork_process(char *command)
 }
 
 /**
- * handle_builtin - Handle built-in shell commands
- * @command: The command to handle
- * @args: arguments
- * Return: Return status for built-in commands, -1 if not a built-in command.
+ * free_buffer - handle arguments
+ * @buffer: string to break down
+ * Return: void.
  */
-int handle_builtin(char *command, char **args)
+void free_buffer(char **buffer)
 {
-	if (_strcmp(command, "env") == 0)
+	if (buffer != NULL && *buffer != NULL)
 	{
-		print_array(environ);
-		return (-1);
+		free(*buffer);
+		*buffer = NULL;
 	}
-	else if (_strcmp(command, "exit") == 0)
-	{
-		if (args == NULL || args[1] == NULL)
-			return (0);
-		else
-			return (handle_exit_command(args));
-	}
-	else if (_strcmp(command, "cd") == 0)
-	{
-		return (handle_cd_command(&command));
-	}
-
-	return (-1);
 }

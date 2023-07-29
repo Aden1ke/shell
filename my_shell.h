@@ -20,10 +20,6 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 extern char **environ;
-<<<<<<< HEAD
-extern char *name;
-extern int incr;
-=======
 char *name;
 int incr;
 int stat_;
@@ -31,13 +27,12 @@ char *buffer;
 char **command;
 int first;
 char *shell;
->>>>>>> 1eee9c11927c4b308f76dec0ebf588aab8e9ac1c
 extern bool should_exit;
 
 int handle_arguments(char *line);
 int handle_non_interactive_mode(void);
 int handle_interactive_mode(void);
-int handle_builtin(char *command, char **args);
+int handle_builtin_or_process(char *command);
 bool is_number(const char *str);
 int _strcmp(char *s1, char *s2);
 ssize_t my_getline(char **buffer, size_t *n, FILE *stream);
@@ -79,5 +74,8 @@ int put_int(int s, int num);
 int put_str(int s, char *str);
 int prints(int s, const char *fmt, char *s1, int num, char *s2);
 int exit_status(char *exit_stat);
+int handle_cd_to_home();
+int handle_cd_to_oldpwd();
+int handle_change_directory(char *path);
 
 #endif

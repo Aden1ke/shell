@@ -3,7 +3,7 @@
 /**
  * exit_status - exits the shell with a status
  * @exit_stat: the exit status
- * Return: -2 on failure 
+ * Return: -2 on failure
  */
 int exit_status(char *exit_stat)
 {

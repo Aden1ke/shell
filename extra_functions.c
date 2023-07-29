@@ -27,7 +27,7 @@ int _atoi(char *s)
 	if (!digit_seen)
 	{
 		return (-1);
-        }
+	}
 	return (num * sign);
 }
 /**
@@ -50,17 +50,4 @@ void free_array(char **array)
 	}
 
 	free(array);
-}
-/**
- * free_buffer - handle arguments
- * @buffer: string to break down
- * Return: void.
- */
-void free_buffer(char **buffer)
-{
-	if (buffer != NULL && *buffer != NULL)
-	{
-		free(*buffer);
-		*buffer = NULL;
-	}
 }

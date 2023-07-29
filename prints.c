@@ -6,7 +6,7 @@
  * @fmt: Format specifiers
  * @s1: string 1
  * @s2: string 2
- * @num: number 
+ * @num: number
  * Return: Length of string
  */
 int prints(int s, const char *fmt, char *s1, int num, char *s2)

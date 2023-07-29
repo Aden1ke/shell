@@ -8,15 +8,14 @@ int handle_exit_command(char **args)
 {
 	if (args[1] == NULL)
 	{
-		should_exit = true;
-		return 0;
+		return (0);
 	}
 	else if (args[2] == NULL)
 	{
 		int status = _atoi(args[1]);
+
 		if (status != -1)
 		{
-			should_exit = true;
 			return (status);
 		}
 		else
@@ -39,39 +38,15 @@ int handle_exit_command(char **args)
  */
 int handle_cd_command(char **args)
 {
-	char *current_dir = NULL, *current_new_dir = NULL;
+	char *current_dir = NULL;
 
 	if (args[1] == NULL || _strcmp(args[1], "~") == 0)
 	{
-		char *home_dir = get_env_value("HOME");
-		if (home_dir == NULL)
-		{
-			perror("HOME environment variable not set");
-			return (1);
-		}
-		if (chdir(home_dir) == -1)
-		{
-			perror("chdir error");
-			return (1);
-		}
-		printf("Changed directory to: %s\n", home_dir);
-		current_dir = home_dir;
+		return (handle_cd_to_home());
 	}
 	else if (_strcmp(args[1], "-") == 0)
 	{
-		char *old_pwd = get_env_value("OLDPWD");
-
-		if (old_pwd == NULL)
-		{
-			perror("OLDPWD environment variable not set");
-			return (1);
-		}
-		if (chdir(old_pwd) == -1)
-		{
-			perror("chdir error");
-			return (1);
-		}
-		current_dir = old_pwd;
+		return (handle_cd_to_oldpwd());
 	}
 	else
 	{
@@ -87,19 +62,72 @@ int handle_cd_command(char **args)
 		return (-1);
 	}
 
-	current_new_dir = getcwd(NULL, 0);
-	if (current_new_dir != NULL)
-	{
-		update_pwd(current_new_dir);
-		if (setenv("OLDPWD", current_new_dir, 1) == -1)
-		{
-			perror("Failed to update OLDPWD environment variable");
-			exit(EXIT_FAILURE);
-		}
-		free(current_new_dir);
-	}
-	else
+	return (handle_change_directory(current_dir));
+}
 
-		perror("Failed to get current working directory");
+/**
+ * handle_cd_to_home - Handle changing directory to HOME.
+ * Return: 0 on success, 1 on failure.
+ */
+int handle_cd_to_home(void)
+{
+	char *home_dir = get_env_value("HOME");
+
+	if (home_dir == NULL)
+	{
+		perror("HOME environment variable not set");
+		return (1);
+	}
+
+	if (chdir(home_dir) == -1)
+	{
+		perror("chdir error");
+		return (1);
+	}
+
+	printf("Changed directory to: %s\n", home_dir);
+	update_pwd(home_dir);
+	return (0);
+}
+
+/**
+ * handle_cd_to_oldpwd - Handle changing directory to OLDPWD.
+ * Return: 0 on success, 1 on failure.
+ */
+int handle_cd_to_oldpwd(void)
+{
+	char *old_pwd = get_env_value("OLDPWD");
+
+	if (old_pwd == NULL)
+	{
+		perror("OLDPWD environment variable not set");
+		return (1);
+	}
+
+	if (chdir(old_pwd) == -1)
+	{
+		perror("chdir error");
+		return (1);
+	}
+	printf("Changed directory to: %s\n", old_pwd);
+	update_pwd(old_pwd);
+
+	return (0);
+}
+
+/**
+ * handle_change_directory - Handle changing directory to a specific path.
+ * @path: The path to change directory to.
+ * Return: 0 on success, -1 on failure.
+ */
+int handle_change_directory(char *path)
+{
+	if (chdir(path) == -1)
+	{
+		perror("chdir error");
+		return (-1);
+	}
+	printf("Changed directory to: %s\n", path);
+	update_pwd(path);
 	return (0);
 }
