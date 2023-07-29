@@ -65,4 +65,23 @@ void free_array(char **array)
 
 	free(array);
 }
+/**
+ * normalize_path - normlize path.
+ * @path:  array of arguments.
+ * Return: 0 on success, -1 on failure.
+ */
+void normalize_path(char *path) 
+{
+	int i;
+	int len = _strlen(path);
 
+	for (i = 1; i < len; i++)
+	{
+		if (path[i] == '/' && path[i - 1] == '/')
+		{
+			memmove(&path[i - 1], &path[i], len - i);
+			len--;
+			i--;
+		}
+	}
+}

@@ -83,6 +83,8 @@ int _env(char **args);
 int handle_cd_to_home();
 int handle_cd_to_oldpwd();
 int handle_change_directory(char *path);
+void execute_command(char **data);
+void normalize_path(char *path);
 char *dup_str(char *str);
 char *path(char *command);
 char **str_tok(char *str, char delim);
