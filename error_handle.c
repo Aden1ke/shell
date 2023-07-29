@@ -47,7 +47,7 @@ char *error_127(char **args)
 	if (!incr_str)
 		return (NULL);
 
-	len = _strlen(name) + _strlen(incr_str) + _strlen(args[0]) + 16;
+	len = _strlen(name) + _strlen(incr_str) + _strlen(args[0]) + 24;
 	error = malloc(sizeof(char) * (len + 1));
 	if (!error)
 	{

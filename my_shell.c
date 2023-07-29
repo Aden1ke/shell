@@ -1,7 +1,11 @@
 #include "my_shell.h"
+<<<<<<< HEAD
 char *name = NULL;
 int incr = 0;
 bool should_exit = false;
+=======
+
+>>>>>>> 1eee9c11927c4b308f76dec0ebf588aab8e9ac1c
 /**
  * main - Simple shell program that runs shell commands
  * similar to the bash script
@@ -29,6 +33,7 @@ int main(int argc, char *argv[])
 
 
 /**
+<<<<<<< HEAD
  * handle_interactive_mode - Handle shell command
  * in interactive mode
  * Return: void.
@@ -122,6 +127,8 @@ int handle_non_interactive_mode(void)
 	return (0);
 }
 /**
+=======
+>>>>>>> 1eee9c11927c4b308f76dec0ebf588aab8e9ac1c
  * handle_fork_process - handle fork process
  * to create reapeted process
  * @command: string to break down
@@ -155,6 +162,7 @@ int handle_fork_process(char *command)
 	}
 	return (0);
 }
+
 /**
  * handle_builtin - Handle built-in shell commands
  * @command: The command to handle
