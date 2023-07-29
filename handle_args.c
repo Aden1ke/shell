@@ -27,12 +27,8 @@ int handle_arguments(char *line)
 	}
 	else if (_strcmp(command[0], "cd") == 0)
 	{
-		return (handle_cd_command(command));
+		return (builtin_cd(command));
 	}
-	else if (_strcmp(command[0], "setenv") == 0)
-		return (_setenv(command));
-	else if (_strcmp(command[0], "unsetenv") == 0)
-		return (_unsetenv(command));
 	return (execve_helper(command[0], command));
 }
 
@@ -47,17 +43,17 @@ int execve_helper(char *command, char *args[])
 	char *command_path = command;
 
 	if (command_path[0] != '/' && command_path[0] != '.')
-		command_path = locate_path(command_path);
+		command_path = path(command_path);
 	if (!command_path || access(command_path, X_OK) == -1)
 	{
-		perror("Path error");
+		prints(2, "%a: %b: %c: not found\n", shell, first, command);
 		return (127);
 	}
 
 	if (execve(command_path, args, environ) == -1)
 	{
 		perror("execve error");
-		return (127);
+		return (0);
 	}
 	return (0);
 }
