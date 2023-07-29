@@ -113,9 +113,10 @@ int builtin_cd(char **data)
 			}
 			return (0);
 		}
-		else if (_strcompare(data[1], "/", 0))
+		else if (data[1][0] == '/')
 		{
-			return (set_working_dir("/"));
+			normalize_path(data[1]);
+			return (set_working_dir(data[1]));
 		}
 		else if (_strcompare(data[1], ".", 0))
 		{
