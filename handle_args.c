@@ -29,8 +29,6 @@ int handle_arguments(char *line)
 	{
 		return (builtin_cd(command));
 	}
-<<<<<<< HEAD
-=======
 	else if (_strcmp(command[0], "setenv") == 0)
 	{
 		return (_setenv(command));
@@ -39,7 +37,6 @@ int handle_arguments(char *line)
 	{
 		return (_unsetenv(command));
 	}
->>>>>>> 3c2d39c4e4c1e20c01f0a04ed4b13f8102428f61
 	return (execve_helper(command[0], command));
 }
 
