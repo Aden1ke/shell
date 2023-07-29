@@ -74,5 +74,8 @@ int put_int(int s, int num);
 int put_str(int s, char *str);
 int prints(int s, const char *fmt, char *s1, int num, char *s2);
 int exit_status(char *exit_stat);
+int _unsetenv(char **args);
+int _setenv(char **args);
+int _env(char **args);
 
 #endif
